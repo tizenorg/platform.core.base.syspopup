@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/usr
+exec_prefix=@EXEC_PREFIX@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+
+Name: libsyspopup
+Description: system popup library for ui 
+Version: @VERSION@
+Requires: dlog bundle sqlite3 glib-2.0 heynoti elementary utilX ecore-x
+Libs: -L${libdir} -lsyspopup
+Cflags: -I${includedir}
