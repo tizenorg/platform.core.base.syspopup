@@ -1,10 +1,9 @@
-
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.58
+Version:	0.0.67
 Release:    1
 Group:      TO_BE/FILLED_IN
-License:    TO_BE/FILLED_IN
+License:    Apache-2.0
 Source0:    syspopup-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(post): /bin/touch
@@ -19,7 +18,6 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(heynoti)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
-BuildRequires:  pkgconfig(quickpanel)
 BuildRequires:  pkgconfig(appcore-efl)
 
 
@@ -48,7 +46,7 @@ syspopup-caller package for popup
 %package caller-devel
 Summary:    syspopup-caller development package
 Group:      TO_BE/FILLED_IN
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name}-devel = %{version}-%{release}
 
 %description caller-devel
 syspopup-caller development package for popup
@@ -57,19 +55,15 @@ syspopup-caller development package for popup
 %prep
 %setup -q -n %{name}-%{version}
 
-CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
 
 %build
-
-
+CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
 make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
 %make_install
 
-mkdir -p %{buildroot}/opt/dbspace
-#sqlite3 $(CURDIR)/debian/tmp/opt/dbspace/.syspopup.db < $(CURDIR)/data/syspopup_db.sql
 touch %{buildroot}%{_datadir}/popup_noti_term
 
 
@@ -80,6 +74,11 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 mkdir -p /opt/dbspace/
 sqlite3 /opt/dbspace/.syspopup.db < /opt/share/syspopup_db.sql
 rm -rf /opt/share/syspopup_db.sql
+chown root:5000 /opt/dbspace/.syspopup.db
+chown root:5000 /opt/dbspace/.syspopup.db-journal
+chmod 664 /opt/dbspace/.syspopup.db
+chmod 664 /opt/dbspace/.syspopup.db-journal
+
 
 %postun -p /sbin/ldconfig
 
@@ -94,7 +93,6 @@ rm -rf /opt/share/syspopup_db.sql
 
 
 %files
-%defattr(-,root,root,-)
 %{_datadir}/icons/default/small/org.tizen.syspopup-app.png
 %{_bindir}/sp_test
 %{_bindir}/syspopup-app
@@ -105,18 +103,15 @@ rm -rf /opt/share/syspopup_db.sql
 
 
 %files devel
-%defattr(-,root,root,-)
 %{_includedir}/SLP_SYSPOPUP_PG.h
 %{_includedir}/syspopup.h
 %{_libdir}/libsyspopup.so
 %{_libdir}/pkgconfig/syspopup.pc
 
 %files caller
-%defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
 
 %files caller-devel
-%defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
