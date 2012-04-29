@@ -20,11 +20,12 @@
  *
  */
 
-
+#include <stdio.h>
 #include <glib.h>
-#include <heynoti.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include "syspopup_core.h"
 #include "simple_util.h"
 
@@ -33,6 +34,7 @@
 static syspopup *syspopup_head = NULL;
 
 static int initialized = 0;
+static DBusConnection *bus;
 static int noti_fd = -1;
 static int sp_id = 0;
 
@@ -118,30 +120,74 @@ void _syspopup_del(int id)
 	}
 }
 
+
+static DBusHandlerResult
+__sys_popup_dbus_signal_filter(DBusConnection *conn, DBusMessage *message,
+				     void *user_data)
+{
+	const char *sender;
+	const char *interface;
+	int dead_pid;
+
+	DBusError error;
+	dbus_error_init(&error);
+
+	interface = dbus_message_get_interface(message);
+	if (interface == NULL) {
+		_E("reject by security issue - no interface\n");
+		return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+	}
+
+	if (dbus_message_is_signal(message, interface,
+				   SYSPOPUP_DBUS_SP_TERM_SIGNAL)) {
+		if (_term_handler)
+			_term_handler(NULL);
+
+		_D("term handler has been called");
+	}
+
+	return DBUS_HANDLER_RESULT_HANDLED;
+}
+
+
+
 int _syspopup_init(void (*term_handler) (void *),
 		   gboolean(*timeout_handler) (void *))
 {
+	DBusError error;
+	char rule[MAX_LOCAL_BUFSZ];
+
 	if (initialized)
 		return 0;
 
 	_term_handler = term_handler;
 	_timeout_handler = timeout_handler;
 
-	noti_fd = heynoti_init();
-	if (noti_fd < 0) {
-		_E("heynoti add failed\n");
+	dbus_error_init(&error);
+	bus = dbus_bus_get_private(DBUS_BUS_SYSTEM, &error);
+	if (!bus) {
+		_E("Failed to connect to the D-BUS daemon: %s", error.message);
+		dbus_error_free(&error);
+		return -1;
+	}
+	dbus_connection_setup_with_g_main(bus, NULL);
+
+	snprintf(rule, MAX_LOCAL_BUFSZ,
+		 "path='%s',type='signal',interface='%s'", SYSPOPUP_DBUS_PATH,
+		 SYSPOPUP_DBUS_SIGNAL_INTERFACE);
+	/* listening to messages */
+	dbus_bus_add_match(bus, rule, &error);
+	if (dbus_error_is_set(&error)) {
+		_E("Fail to rule set: %s", error.message);
+		dbus_error_free(&error);
 		return -1;
 	}
 
-	if (heynoti_subscribe_file(noti_fd, SYSPOPUP_TERM_NOTI_PATH,
-				   _term_handler, NULL,
-				   IN_CLOSE_WRITE | IN_DELETE_SELF) < 0) {
-		_E("heynoti subscribe file failed");
+	if (dbus_connection_add_filter(bus, 
+		__sys_popup_dbus_signal_filter, NULL, NULL) == FALSE)
 		return -1;
-	} else {
-		if (heynoti_attach_handler(noti_fd) < 0)
-			_E("heynoti attach failed");
-	}
+
+	_D("syspopup signal initialized");
 
 	initialized = 1;
 	return 0;

@@ -203,6 +203,11 @@ static void __response_cb(void *data, Evas_Object * obj, void *event_info)
 	elm_exit();
 }
 
+static void _block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	evas_object_del(obj);
+}
+
 static int __app_reset(bundle *b, void *data)
 {
 	struct appdata *ad = data;
@@ -248,9 +253,9 @@ static int __app_reset(bundle *b, void *data)
 				evas_object_size_hint_weight_set(popup,
 							EVAS_HINT_EXPAND,
 							EVAS_HINT_EXPAND);
-				elm_popup_mode_set(popup, ELM_POPUP_TYPE_ALERT);
-				elm_popup_title_label_set(popup, ad->title);
-				elm_popup_desc_set(popup, ad->content);
+				evas_object_smart_callback_add(popup, "block,clicked", _block_clicked_cb, NULL);
+				elm_object_part_text_set(popup, "title,text", ad->title);
+				elm_object_text_set(popup, ad->content);
 				evas_object_smart_callback_add(popup,
 							       "response",
 							       __response_cb,

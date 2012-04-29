@@ -1,9 +1,9 @@
 Name:       syspopup
 Summary:    syspopup package
-Version:	0.0.67
+Version:    0.0.74
 Release:    1
-Group:      TO_BE/FILLED_IN
-License:    Apache-2.0
+Group:      System/Libraries
+License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(post): /bin/touch
@@ -15,7 +15,6 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(heynoti)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
@@ -46,7 +45,7 @@ syspopup-caller package for popup
 %package caller-devel
 Summary:    syspopup-caller development package
 Group:      TO_BE/FILLED_IN
-Requires:   %{name}-devel = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description caller-devel
 syspopup-caller development package for popup
@@ -64,6 +63,8 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
+mkdir -p %{buildroot}/opt/dbspace
+#sqlite3 $(CURDIR)/debian/tmp/opt/dbspace/.syspopup.db < $(CURDIR)/data/syspopup_db.sql
 touch %{buildroot}%{_datadir}/popup_noti_term
 
 
@@ -74,11 +75,6 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 mkdir -p /opt/dbspace/
 sqlite3 /opt/dbspace/.syspopup.db < /opt/share/syspopup_db.sql
 rm -rf /opt/share/syspopup_db.sql
-chown root:5000 /opt/dbspace/.syspopup.db
-chown root:5000 /opt/dbspace/.syspopup.db-journal
-chmod 664 /opt/dbspace/.syspopup.db
-chmod 664 /opt/dbspace/.syspopup.db-journal
-
 
 %postun -p /sbin/ldconfig
 

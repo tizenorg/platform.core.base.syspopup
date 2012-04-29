@@ -1,7 +1,7 @@
-syspopup (0.0.67-1) unstable; urgency=low
+syspopup (0.0.74) unstable; urgency=low
 
   * Initial Release.
   * Git: pkgs/s/syspopup
-  * Tag: syspopup_0.0.67-1
+  * Tag: syspopup_0.0.74
 
- -- Sewook Park <sewook7.park@samsung.com>  Wed, 07 Dec 2011 12:55:49 +0900
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Tue, 20 Mar 2012 14:45:42 +0900
