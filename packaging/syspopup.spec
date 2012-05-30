@@ -5,6 +5,7 @@ Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
+Source1001: packaging/syspopup.manifest 
 Requires(post): /sbin/ldconfig
 Requires(post): /bin/touch
 Requires(postun): /sbin/ldconfig
@@ -56,6 +57,7 @@ syspopup-caller development package for popup
 
 
 %build
+cp %{SOURCE1001} .
 CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
 make %{?jobs:-j%jobs}
 
@@ -89,6 +91,7 @@ rm -rf /opt/share/syspopup_db.sql
 
 
 %files
+%manifest syspopup.manifest
 %{_datadir}/icons/default/small/org.tizen.syspopup-app.png
 %{_bindir}/sp_test
 %{_bindir}/syspopup-app
@@ -99,15 +102,18 @@ rm -rf /opt/share/syspopup_db.sql
 
 
 %files devel
+%manifest syspopup.manifest
 %{_includedir}/SLP_SYSPOPUP_PG.h
 %{_includedir}/syspopup.h
 %{_libdir}/libsyspopup.so
 %{_libdir}/pkgconfig/syspopup.pc
 
 %files caller
+%manifest syspopup.manifest
 %{_libdir}/libsyspopup_caller.so.0.1.0
 
 %files caller-devel
+%manifest syspopup.manifest
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
