@@ -1,6 +1,7 @@
+
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.74
+Version:    0.0.80
 Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
@@ -54,9 +55,11 @@ syspopup-caller development package for popup
 %prep
 %setup -q -n %{name}-%{version}
 
+CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
 
 %build
-CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
+
+
 make %{?jobs:-j%jobs}
 
 %install
@@ -73,8 +76,7 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 /sbin/ldconfig
 
 mkdir -p /opt/dbspace/
-sqlite3 /opt/dbspace/.syspopup.db < /opt/share/syspopup_db.sql
-rm -rf /opt/share/syspopup_db.sql
+sqlite3 /opt/dbspace/.syspopup.db < /usr/share/syspopup/syspopup_db.sql
 
 %postun -p /sbin/ldconfig
 
@@ -89,25 +91,29 @@ rm -rf /opt/share/syspopup_db.sql
 
 
 %files
+%defattr(-,root,root,-)
 %{_datadir}/icons/default/small/org.tizen.syspopup-app.png
 %{_bindir}/sp_test
 %{_bindir}/syspopup-app
 %{_libdir}/libsyspopup.so.0.1.0
-/opt/share/syspopup_db.sql
-/opt/share/applications/org.tizen.syspopup-app.desktop
+/usr/share/syspopup/syspopup_db.sql
+/usr/share/packages/org.tizen.syspopup-app.xml
 %{_datadir}/popup_noti_term
 
 
 %files devel
+%defattr(-,root,root,-)
 %{_includedir}/SLP_SYSPOPUP_PG.h
 %{_includedir}/syspopup.h
 %{_libdir}/libsyspopup.so
 %{_libdir}/pkgconfig/syspopup.pc
 
 %files caller
+%defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
 
 %files caller-devel
+%defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc

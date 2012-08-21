@@ -1,7 +1,583 @@
+syspopup (0.0.75) unstable; urgency=low
+
+  * Added OTG syspopup info
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.75
+
+ -- Sewook Park <sewook7.park@samsung.com>  Mon, 21 May 2012 21:07:17 +0900
+
 syspopup (0.0.74) unstable; urgency=low
 
-  * Initial Release.
-  * Git: pkgs/s/syspopup
+  * Fixed compile warnings
+  * Git: slp/pkgs/s/syspopup
   * Tag: syspopup_0.0.74
 
  -- Jaeho Lee <jaeho81.lee@samsung.com>  Tue, 20 Mar 2012 14:45:42 +0900
+
+syspopup (0.0.73) unstable; urgency=low
+
+  * Changed network syspopup name, Fixed desktop field
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.73
+
+ -- Sewook Park <sewook7.park@samsung.com>  Thu, 15 Mar 2012 16:07:54 +0900
+
+syspopup (0.0.72) unstable; urgency=low
+
+  * Added ticker popup info
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.72
+
+ -- Sewook Park <sewook7.park@samsung.com>  Wed, 14 Mar 2012 16:22:20 +0900
+
+syspopup (0.0.71) unstable; urgency=low
+
+  * API Changes in elementary
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.71
+
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Tue, 13 Mar 2012 17:59:18 +0900
+
+syspopup (0.0.70) unstable; urgency=low
+
+  * Fixed to use dbus instead of heynoti
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.70
+
+ -- Sewook Park <sewook7.park@samsung.com>  Wed, 22 Feb 2012 10:41:10 +0900
+
+syspopup (0.0.69) unstable; urgency=low
+
+  * Added ims-syspopup info
+  * Git: slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.69
+
+ -- Sewook Park <sewook7.park@samsung.com>  Wed, 15 Feb 2012 16:25:22 +0900
+
+syspopup (0.0.68) unstable; urgency=low
+
+  * remove quickpanel dependency
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.68
+
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Fri, 16 Dec 2011 09:51:11 +0900
+
+syspopup (0.0.67) unstable; urgency=low
+
+  * Updated changelog
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.67
+
+ -- Sewook Park <sewook7.park@samsung.com>  Mon, 05 Dec 2011 15:55:09 +0900
+
+syspopup (0.0.66) unstable; urgency=low
+
+  * Fix desktop not to be removed
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.66
+
+ -- Sewook Park <sewook7.park@samsung.com>  Mon, 21 Nov 2011 12:51:51 +0900
+
+syspopup (0.0.65) unstable; urgency=low
+
+  * Changed Boilerplate as per the guideline
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.65
+
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Mon, 07 Nov 2011 18:38:10 +0900
+
+syspopup (0.0.64) unstable; urgency=low
+
+  * Fix syspopup focus concept
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.64
+
+ -- Sewook Park <sewook7.park@samsung.com>  Thu, 27 Oct 2011 16:40:49 +0900
+
+syspopup (0.0.63) unstable; urgency=low
+
+  * Change active window angle to root angle
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.63
+
+ -- Sewook Park <sewook7.park@samsung.com>  Wed, 19 Oct 2011 19:14:24 +0900
+
+syspopup (0.0.62) unstable; urgency=low
+
+  * Fix syspopup-app layout
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.62 
+
+ -- Sewook Park <sewook7.park@samsung.com>  Tue, 11 Oct 2011 11:11:31 +0900
+
+syspopup (0.0.61) unstable; urgency=low
+
+  * add usb-syspopup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.61 
+
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Wed, 05 Oct 2011 16:02:45 +0900
+
+syspopup (0.0.60) unstable; urgency=low
+
+  * Fix prevent issue
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.60 
+
+ -- Jaeho Lee <jaeho81.lee@samsung.com>  Mon, 05 Sep 2011 13:42:51 +0900
+
+syspopup (0.0.59) unstable; urgency=low
+
+  * Add alert-3g-syspopup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.59
+
+ -- Sewook Park <sewook7.park@samsung.com>  Tue, 23 Aug 2011 16:08:24 +0900
+
+syspopup (0.0.58) unstable; urgency=low
+
+  * Apply code cleanup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.58 
+
+ -- Sewook Park <sewook7.park@samsung.com>  Mon, 01 Aug 2011 19:59:37 +0900
+
+syspopup (0.0.57) unstable; urgency=low
+
+  * Fix Boilerplate module name
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.57
+
+ -- Sewook Park <sewook7.park@samsung.com>  Sat, 16 Jul 2011 13:38:40 +0900
+
+syspopup (0.0.56) unstable; urgency=low
+
+  * Apply Boilerplate
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.56
+
+ -- Sewook Park <sewook7.park@samsung.com>  Wed, 13 Jul 2011 17:31:28 +0900
+
+syspopup (0.0.55) unstable; urgency=low
+
+  * Modify bt-syspopup to be unfocused
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.55
+
+ -- Sewook Park <sewook7.park@samsung.com>  Fri, 01 Jul 2011 14:37:08 +0900
+
+syspopup (0.0.54) unstable; urgency=low
+
+  * Modify push popup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.54
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 17 May 2011 20:53:53 +0900
+
+syspopup (0.0.53) unstable; urgency=low
+
+  * Modify push popup 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.53
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 17 May 2011 20:43:19 +0900
+
+syspopup (0.0.52) unstable; urgency=low
+
+  * Modify push popup 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.52
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 17 May 2011 20:29:23 +0900
+
+syspopup (0.0.51) unstable; urgency=low
+
+  * Modify push popup 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.51
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 17 May 2011 20:02:11 +0900
+
+syspopup (0.0.50) unstable; urgency=low
+
+  * Add push popup 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.50
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 11 May 2011 09:55:52 +0900
+
+syspopup (0.0.49) unstable; urgency=low
+
+  * Remove deb. from package name
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.49
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 12 Apr 2011 11:47:30 +0900
+
+syspopup (0.0.48) unstable; urgency=low
+
+  * Remove quickpanel insert option
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.48
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 16 Mar 2011 19:02:23 +0900
+
+syspopup (0.0.47) unstable; urgency=low
+
+  * Remove quickpanel insert option
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.47
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 16 Mar 2011 18:55:50 +0900
+
+syspopup (0.0.46) unstable; urgency=low
+
+  * Call term act callback when the option is hide
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.46
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 22 Feb 2011 15:47:35 +0900
+
+syspopup (0.0.45) unstable; urgency=low
+
+  * Image optimization 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.45
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 21 Feb 2011 11:37:26 +0900
+
+syspopup (0.0.44) unstable; urgency=low
+
+  * Image optimization 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.44
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 21 Feb 2011 11:37:26 +0900
+
+syspopup (0.0.43) unstable; urgency=low
+
+  * Rebuild for quickpanel structure 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.43
+
+ -- Noha Park <noha.park@samsung.com>  Fri, 18 Feb 2011 09:13:42 +0900
+
+syspopup (0.0.42) unstable; urgency=low
+
+  * Move desktop file destination
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.42
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 14 Feb 2011 17:03:56 +0900
+
+syspopup (0.0.41) unstable; urgency=low
+
+  * Add NFC syspopup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.41
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 27 Jan 2011 14:20:40 +0900
+
+syspopup (0.0.40) unstable; urgency=low
+
+  * Add extern C to syspopup_caller header 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.40
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 27 Jan 2011 10:35:47 +0900
+
+syspopup (0.0.39) unstable; urgency=low
+
+  * Add extern C to syspopup_caller header 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.39
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 27 Jan 2011 10:30:18 +0900
+
+syspopup (0.0.38) unstable; urgency=low
+   
+  * Modify wifi qs timeout 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.38
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 12 Jan 2011 16:45:21 +0900
+
+syspopup (0.0.37) unstable; urgency=low
+
+  * Modify syspopup app
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.37
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 05 Jan 2011 08:59:54 +0900
+
+syspopup (0.0.36) unstable; urgency=low
+
+  * Modify bt syspopup name
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.36
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 04 Jan 2011 08:47:34 +0900
+
+syspopup (0.0.35) unstable; urgency=low
+
+  * Modify drm popup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.35
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 21 Dec 2010 10:02:26 +0900
+
+syspopup (0.0.34) unstable; urgency=low
+
+  * Add dnet popup
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.34
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 20 Dec 2010 17:25:43 +0900
+
+syspopup (0.0.33) unstable; urgency=low
+
+  * Modify ap_con_wifi to wifi-qs
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.33
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 20 Dec 2010 17:12:50 +0900
+
+syspopup (0.0.32) unstable; urgency=low
+
+  * Modify ap_con_wifi to wifi-qs
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.32
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 15 Dec 2010 16:39:25 +0900
+
+syspopup (0.0.31) unstable; urgency=low
+
+  * Modify ap_con_wifi to wifi-qs
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.31
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 15 Dec 2010 14:57:17 +0900
+
+syspopup (0.0.30) unstable; urgency=low
+
+  * Modify wifi-qs to ap_con_wifi
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.30
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 15 Dec 2010 11:37:51 +0900
+
+syspopup (0.0.29) unstable; urgency=low
+
+  * Update bash shell script (== to =)
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.29
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 15 Dec 2010 09:54:41 +0900
+
+syspopup (0.0.28) unstable; urgency=low
+
+  * Add wifi-qs 
+  * Git: slp-source.sec.samsung.net:slp/pkgs/s/syspopup
+  * Tag: syspopup_0.0.28
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 13 Dec 2010 14:53:03 +0900
+
+syspopup (0.0.27) unstable; urgency=low
+
+  * Modify Sample code (syspopup-app)
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.27
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 02 Dec 2010 10:56:57 +0900
+
+syspopup (0.0.26) unstable; urgency=low
+
+  * Modify power off popup
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.26
+
+ -- Noha Park <noha.park@samsung.com>  Fri, 26 Nov 2010 21:41:14 +0900
+
+syspopup (0.0.25) unstable; urgency=low
+
+  * Modify default rotation angle
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.25
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 22 Nov 2010 20:33:07 +0900
+
+syspopup (0.0.24) unstable; urgency=low
+
+  * Modified desktop file
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.24
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 22 Nov 2010 15:59:26 +0900
+
+syspopup (0.0.23) unstable; urgency=low
+
+  * Modified desktop file
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.23
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 22 Nov 2010 13:57:09 +0900
+
+syspopup (0.0.22) unstable; urgency=low
+
+  * Code regeneration 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.22
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 15 Nov 2010 18:14:36 +0900
+
+syspopup (0.0.21) unstable; urgency=low
+
+  * Modify rotation cb in syspopup-app 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.21
+
+ -- Noha Park <noha.park@samsung.com>  Fri, 12 Nov 2010 21:49:34 +0900
+
+syspopup (0.0.20) unstable; urgency=low
+
+  * Modify rotation cb in syspopup-app 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.20
+
+ -- Noha Park <noha.park@samsung.com>  Fri, 12 Nov 2010 14:17:49 +0900
+
+syspopup (0.0.19) unstable; urgency=low
+
+  * Modify DB create procedure(updated)
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.19
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 11 Nov 2010 11:44:26 +0900
+
+syspopup (0.0.18) unstable; urgency=low
+
+  * Modify DB create procedure(updated)
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.18
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 11 Nov 2010 09:37:41 +0900
+
+syspopup (0.0.17) unstable; urgency=low
+
+  * Modify DB create procedure(updated)
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.17
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 10 Nov 2010 15:23:36 +0900
+
+syspopup (0.0.16) unstable; urgency=low
+
+  * Modify DB create procedure(updated)
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.16
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 10 Nov 2010 14:32:11 +0900
+
+syspopup (0.0.15) unstable; urgency=low
+
+  * Modify DB create procedure
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.15
+
+ -- Noha Park <noha.park@samsung.com>  Wed, 10 Nov 2010 11:31:47 +0900
+
+syspopup (0.0.14) unstable; urgency=low
+
+  * Modify Syspopup API name
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.14
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 09 Nov 2010 10:18:47 +0900
+
+syspopup (0.0.13) unstable; urgency=low
+
+  * Modify Syspopup create procedure
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.13
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 08 Nov 2010 12:18:06 +0900
+
+syspopup (0.0.12) unstable; urgency=low
+
+  * Modify Syspopup create procedure
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.12
+
+ -- Noha Park <noha.park@samsung.com>  Mon, 08 Nov 2010 11:16:33 +0900
+
+syspopup (0.0.11) unstable; urgency=low
+
+  * Modify Syspopup Caller
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.11
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 04 Nov 2010 11:54:31 +0900
+
+syspopup (0.0.10) unstable; urgency=low
+
+  * Modify e17
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.10
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 04 Nov 2010 10:18:19 +0900
+
+syspopup (0.0.9) unstable; urgency=low
+
+  * add endkey handler 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.9
+
+ -- Noha Park <noha.park@samsung.com>  Tue, 02 Nov 2010 16:07:30 +0900
+
+syspopup (0.0.8) unstable; urgency=low
+
+  * modify syspopup parent window 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.8 
+
+ -- Noha Park <noha.park@samsung.com>  Fri, 15 Oct 2010 11:01:33 +0900
+
+syspopup (0.0.7) unstable; urgency=low
+
+  * modify quickpanel insert procedure 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.7 
+
+ -- Noha Park <noha.park@samsung.com>  Thu, 14 Oct 2010 19:14:33 +0900
+
+syspopup (0.0.6) unstable; urgency=low
+
+  * modify user callback function 
+  * Git: 165.213.180.234:/git/slp/pkgs/syspopup
+  * Tag: syspopup_0.0.6 
+
+ -- Kunhoon Baik <knhoon.baik@samsung.com>  Thu, 14 Oct 2010 17:48:52 +0900
+
+syspopup (0.0.5) unstable; urgency=low
+
+  * build fail fix
+
+ -- Kunhoon Baik <knhoon.baik@samsung.com>  Wed, 13 Oct 2010 17:49:08 +0900
+
+syspopup (0.0.3) unstable; urgency=low
+
+  * add doxygen and change maintainer
+
+ -- Kunhoon Baik <knhoon.baik@samsung.com>  Wed, 13 Oct 2010 16:35:43 +0900
+
+syspopup (0.0.2) unstable; urgency=low
+
+  * modify dpkg 
+
+ -- Kunhoon Baik <knhoon.baik@samsung.com>  Tue, 12 Oct 2010 13:14:35 +0900
+
+syspopup (0.0.1) unstable; urgency=low
+
+  * initial update
+
+ -- Kunhoon Baik <knhoon.baik@samsung.com>  Tue, 27 Jul 2010 15:51:31 +0900

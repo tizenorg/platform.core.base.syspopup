@@ -1,8 +1,0 @@
-Name=@PROJECT_NAME@
-Exec=@BINDIR@/@PROJECT_NAME@
-Icon=@PKGNAME@.png
-Type=Application
-NoDisplay=true
-X-Tizen-TaskManage=false
-X-Tizen-Removable=false
-Version=0.1.0-0

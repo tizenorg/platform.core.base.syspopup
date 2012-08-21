@@ -30,7 +30,7 @@ ENDFOREACH(flag)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include)
 SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} -Wl,-zdefs" )
 SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} -fvisibility=hidden")
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -g")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 SET(CMAKE_C_FLAGS_RELEASE "-O2")
 
@@ -59,7 +59,7 @@ add_library(syspopup_mods STATIC
 		)
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/SLP_SYSPOPUP_PG.h DESTINATION include)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/syspopup_db.sql DESTINATION /opt/share/)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/syspopup_db.sql DESTINATION /usr/share/syspopup/)
 
 add_subdirectory(syspopup)
 add_subdirectory(syspopup-caller)

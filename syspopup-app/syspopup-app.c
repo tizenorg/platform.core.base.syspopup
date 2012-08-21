@@ -119,6 +119,39 @@ static void __win_del(void *data, Evas_Object * obj, void *event)
 	elm_exit();
 }
 
+/*
+static int rotate(enum appcore_rm m, void *data)
+{
+	struct appdata *ad = data;
+	int r;
+
+	if (ad == NULL || ad->win == NULL)
+		return 0;
+
+	switch(m) {
+	case APPCORE_RM_PORTRAIT_NORMAL:
+		r = 0;
+		break;
+	case APPCORE_RM_PORTRAIT_REVERSE:
+		r = 180;
+		break;
+	case APPCORE_RM_LANDSCAPE_NORMAL:
+		r = 270;
+		break;
+	case APPCORE_RM_LANDSCAPE_REVERSE:
+		r = 90;
+		break;
+	default:
+		r = -1;
+		break;
+	}
+
+	if (r >= 0)
+		elm_win_rotation_with_resize_set(ad->win, r);
+
+	return 0;
+}
+*/
 
 static Evas_Object *__create_win(const char *name)
 {
@@ -160,6 +193,8 @@ static int __app_create(void *data)
 	r = appcore_set_i18n(PACKAGE, LOCALEDIR);
 	if (r)
 		return -1;
+
+	/* appcore_set_rotation_cb(rotate, ad);*/
 
 	appcore_measure_start();
 	return 0;
