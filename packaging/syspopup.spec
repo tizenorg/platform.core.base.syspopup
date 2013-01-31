@@ -49,15 +49,14 @@ syspopup-caller development package for popup
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 
 %build
-CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
+%cmake . -DEXTRA_CFLAGS=-fPIC
 
 make %{?jobs:-j%jobs}
 
 %install
-rm -rf %{buildroot}
 %make_install
 
 mkdir -p %{buildroot}/opt/dbspace
@@ -105,4 +104,3 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
-

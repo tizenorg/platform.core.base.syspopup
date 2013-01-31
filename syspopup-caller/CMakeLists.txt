@@ -61,7 +61,7 @@ SET_TARGET_PROPERTIES(syspopup_caller PROPERTIES SOVERSION 0.1.0)
 CONFIGURE_FILE(syspopup-caller.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup-caller.pc @ONLY)
 
 ### Install ###
-INSTALL(TARGETS syspopup_caller DESTINATION lib COMPONENT RuntimeLibraries)
+INSTALL(TARGETS syspopup_caller DESTINATION ${LIB_INSTALL_DIR} COMPONENT RuntimeLibraries)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../include/syspopup_caller.h DESTINATION include)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/syspopup-caller.pc DESTINATION lib/pkgconfig)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/syspopup-caller.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
