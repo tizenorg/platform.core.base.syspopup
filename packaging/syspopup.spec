@@ -1,10 +1,10 @@
 
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.58
+Version:    0.0.88
 Release:    1
-Group:      TO_BE/FILLED_IN
-License:    TO_BE/FILLED_IN
+Group:      System/Libraries
+License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(post): /bin/touch
@@ -16,10 +16,8 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(heynoti)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
-BuildRequires:  pkgconfig(quickpanel)
 BuildRequires:  pkgconfig(appcore-efl)
 
 
@@ -57,10 +55,8 @@ syspopup-caller development package for popup
 %prep
 %setup -q -n %{name}-%{version}
 
-CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
-
 %build
-
+CFLAGS=${_cflags} cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DEXTRA_CFLAGS=-fPIC
 
 make %{?jobs:-j%jobs}
 
@@ -69,39 +65,32 @@ rm -rf %{buildroot}
 %make_install
 
 mkdir -p %{buildroot}/opt/dbspace
-#sqlite3 $(CURDIR)/debian/tmp/opt/dbspace/.syspopup.db < $(CURDIR)/data/syspopup_db.sql
+sqlite3 %{buildroot}/opt/dbspace/.syspopup.db < %{buildroot}/usr/share/syspopup/syspopup_db.sql
+rm -rf %{buildroot}/usr/share/syspopup/syspopup_db.sql
+
 touch %{buildroot}%{_datadir}/popup_noti_term
-
-
 
 %post
 /sbin/ldconfig
 
-mkdir -p /opt/dbspace/
-sqlite3 /opt/dbspace/.syspopup.db < /opt/share/syspopup_db.sql
-rm -rf /opt/share/syspopup_db.sql
-
 %postun -p /sbin/ldconfig
-
-
-
 
 %post caller -p /sbin/ldconfig
 
 %postun caller -p /sbin/ldconfig
 
-
-
-
 %files
+%manifest syspopup.manifest
 %defattr(-,root,root,-)
 %{_datadir}/icons/default/small/org.tizen.syspopup-app.png
 %{_bindir}/sp_test
 %{_bindir}/syspopup-app
 %{_libdir}/libsyspopup.so.0.1.0
-/opt/share/syspopup_db.sql
-/opt/share/applications/org.tizen.syspopup-app.desktop
+/usr/share/packages/org.tizen.syspopup-app.xml
 %{_datadir}/popup_noti_term
+
+%attr(644,root,app) /opt/dbspace/.syspopup.db
+%attr(644,root,app) /opt/dbspace/.syspopup.db-journal
 
 
 %files devel
@@ -112,6 +101,7 @@ rm -rf /opt/share/syspopup_db.sql
 %{_libdir}/pkgconfig/syspopup.pc
 
 %files caller
+%manifest syspopup-caller.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
 
