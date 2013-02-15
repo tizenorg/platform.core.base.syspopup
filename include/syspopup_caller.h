@@ -25,7 +25,6 @@
 #define __SYSPOPUP_CALLER_H__
 
 #include <bundle.h>
-#include <aul.h>
 
 #ifdef __cplusplus
 extern "C" {

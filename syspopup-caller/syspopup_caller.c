@@ -24,6 +24,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <glib.h>
+#include <dbus/dbus.h>
 #include <aul.h>
 
 #include "syspopup_core.h"
@@ -45,7 +47,7 @@ API int syspopup_launch(char *popup_name, bundle *b)
 	info = _syspopup_info_get(popup_name);
 	if (info == NULL || info->pkgname == NULL) {
 		_E("info or info->pkgname is NULL");
-		if(info)
+		if (info)
 			_syspopup_info_free(info);
 		return -1;
 	}
@@ -81,9 +83,34 @@ API int syspopup_launch(char *popup_name, bundle *b)
 
 API int syspopup_destroy_all()
 {
-	int fd;
-	fd = open(SYSPOPUP_TERM_NOTI_PATH, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	close(fd);
+	DBusMessage *message;
+	DBusError error;
+	DBusConnection *bus = NULL;
+
+	dbus_error_init(&error);
+	bus = dbus_bus_get_private(DBUS_BUS_SYSTEM, &error);
+	if (bus == NULL) {
+		_E("Failed to connect to the D-BUS daemon: %s", error.message);
+		dbus_error_free(&error);
+		return -1;
+	}
+
+	message = dbus_message_new_signal(SYSPOPUP_DBUS_PATH,
+					  SYSPOPUP_DBUS_SIGNAL_INTERFACE,
+					  SYSPOPUP_DBUS_SP_TERM_SIGNAL);
+
+	if (dbus_connection_send(bus, message, NULL) == FALSE) {
+		_E("dbus send error");
+		return -1;
+	}
+
+	dbus_connection_flush(bus);
+	dbus_message_unref(message);
+
+	dbus_connection_close(bus);
+
+	_D("send signal done\n");
+
 	return 0;
 }
 

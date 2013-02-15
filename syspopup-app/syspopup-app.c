@@ -119,6 +119,39 @@ static void __win_del(void *data, Evas_Object * obj, void *event)
 	elm_exit();
 }
 
+/*
+static int rotate(enum appcore_rm m, void *data)
+{
+	struct appdata *ad = data;
+	int r;
+
+	if (ad == NULL || ad->win == NULL)
+		return 0;
+
+	switch(m) {
+	case APPCORE_RM_PORTRAIT_NORMAL:
+		r = 0;
+		break;
+	case APPCORE_RM_PORTRAIT_REVERSE:
+		r = 180;
+		break;
+	case APPCORE_RM_LANDSCAPE_NORMAL:
+		r = 270;
+		break;
+	case APPCORE_RM_LANDSCAPE_REVERSE:
+		r = 90;
+		break;
+	default:
+		r = -1;
+		break;
+	}
+
+	if (r >= 0)
+		elm_win_rotation_with_resize_set(ad->win, r);
+
+	return 0;
+}
+*/
 
 static Evas_Object *__create_win(const char *name)
 {
@@ -160,6 +193,8 @@ static int __app_create(void *data)
 	r = appcore_set_i18n(PACKAGE, LOCALEDIR);
 	if (r)
 		return -1;
+
+	/* appcore_set_rotation_cb(rotate, ad);*/
 
 	appcore_measure_start();
 	return 0;
@@ -203,6 +238,11 @@ static void __response_cb(void *data, Evas_Object * obj, void *event_info)
 	elm_exit();
 }
 
+static void _block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	evas_object_del(obj);
+}
+
 static int __app_reset(bundle *b, void *data)
 {
 	struct appdata *ad = data;
@@ -223,9 +263,6 @@ static int __app_reset(bundle *b, void *data)
 			evas_object_show(ad->win);
 
 			if (ret == 0) {
-				val = bundle_get_val(b,
-						   "_INTERNAL_SYSPOPUP_NAME_");
-
 				val = bundle_get_val(b, "_SYSPOPUP_TITLE_");
 				if (val) {
 					snprintf(ad->title, TITLE_BUF_LEN, "%s",
@@ -248,9 +285,9 @@ static int __app_reset(bundle *b, void *data)
 				evas_object_size_hint_weight_set(popup,
 							EVAS_HINT_EXPAND,
 							EVAS_HINT_EXPAND);
-				elm_popup_mode_set(popup, ELM_POPUP_TYPE_ALERT);
-				elm_popup_title_label_set(popup, ad->title);
-				elm_popup_desc_set(popup, ad->content);
+				evas_object_smart_callback_add(popup, "block,clicked", _block_clicked_cb, NULL);
+				elm_object_part_text_set(popup, "title,text", ad->title);
+				elm_object_text_set(popup, ad->content);
 				evas_object_smart_callback_add(popup,
 							       "response",
 							       __response_cb,

@@ -2,4 +2,3 @@
 @PREFIX@/bin/*
 usr/share/popup_noti_term
 @PREFIX@/share/*
-/opt/share/*
