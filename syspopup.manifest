@@ -1,0 +1,15 @@
+<manifest>
+	<define>
+		<domain name="syspopup"/>
+		<provide>
+			<label name="syspopup::db"/>
+		</provide>
+	</define>
+	<request>
+		<domain name="syspopup"/>
+	</request>
+	<assign>
+		<filesystem path="/usr/lib/libsyspopup.so.0" label="_"/>
+		<filesystem path="/usr/lib/libsyspopup.so.0.1.0" label="_"/>
+	</assign>
+</manifest>

@@ -20,6 +20,7 @@
  *
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "syspopup_caller.h"
@@ -34,6 +35,7 @@ int main(int argc, char **argv)
 {
 	bundle *b;
 	int i;
+	int ret = 0;
 
 	if (argc < 2) {
 		usage();
@@ -49,10 +51,13 @@ int main(int argc, char **argv)
 		b = bundle_create();
 		for (i = 3; i < argc; i = i + 2)
 			bundle_add(b, argv[i], argv[i + 1]);
-		syspopup_launch(argv[2], b);
+		ret = syspopup_launch(argv[2], b);
 		bundle_free(b);
+		if(ret < 0) return -1;
+
 	} else if (strcmp(argv[1], "destroy") == 0) {
-		syspopup_destroy_all();
+		ret = syspopup_destroy_all();
+		if(ret < 0) return -1;
 	} else {
 		usage();
 	}

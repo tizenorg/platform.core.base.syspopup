@@ -1,7 +1,6 @@
 #!/bin/sh
 mkdir -p /opt/dbspace/
-sqlite3 /opt/dbspace/.syspopup.db < /opt/share/syspopup_db.sql
-rm -rf /opt/share/syspopup_db.sql
+sqlite3 /opt/dbspace/.syspopup.db < /usr/share/syspopup/syspopup_db.sql
 
 if [ ${USER} = "root" ]
 then

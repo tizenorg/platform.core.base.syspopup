@@ -54,9 +54,9 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} syspopup ${syspopup_app_pkgs_LDFLAGS})
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
 
 
-# install desktop file & icon
-CONFIGURE_FILE(${PKGNAME}.desktop.in ${CMAKE_BINARY_DIR}/${PKGNAME}.desktop)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/${PKGNAME}.desktop DESTINATION /opt/share/applications)
+# install manifest file & icon
+CONFIGURE_FILE(${PKGNAME}.xml.in ${CMAKE_BINARY_DIR}/${PKGNAME}.xml)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/${PKGNAME}.xml DESTINATION /usr/share/packages)
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/syspopup-app/${PKGNAME}.png DESTINATION share/icons/default/small)
 
 # i18n

@@ -33,8 +33,12 @@
 
 #define MAX_LOCAL_BUFSZ 128
 
-#define _E(fmt, arg...) LOGE("[%s,%d] "fmt , __FUNCTION__, __LINE__, ##arg)
-#define _D(fmt, arg...) LOGD("[%s,%d] "fmt , __FUNCTION__, __LINE__, ##arg)
+#define _E(fmt, arg...) LOGE(fmt,##arg)
+#define _D(fmt, arg...) LOGD(fmt,##arg)
+
+#define SYSPOPUP_DBUS_PATH "/syspopup/dbus_handler"
+#define SYSPOPUP_DBUS_SIGNAL_INTERFACE "org.tizen.syspopup.signal"
+#define SYSPOPUP_DBUS_SP_TERM_SIGNAL	"syspopup_term"
 
 #endif
 
