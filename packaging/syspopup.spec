@@ -1,7 +1,7 @@
 
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.86
+Version:    0.0.89
 Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
@@ -65,14 +65,13 @@ rm -rf %{buildroot}
 %make_install
 
 mkdir -p %{buildroot}/opt/dbspace
-#sqlite3 $(CURDIR)/debian/tmp/opt/dbspace/.syspopup.db < $(CURDIR)/data/syspopup_db.sql
+sqlite3 %{buildroot}/opt/dbspace/.syspopup.db < %{buildroot}/usr/share/syspopup/syspopup_db.sql
+rm -rf %{buildroot}/usr/share/syspopup/syspopup_db.sql
+
 touch %{buildroot}%{_datadir}/popup_noti_term
 
 %post
 /sbin/ldconfig
-
-mkdir -p /opt/dbspace/
-sqlite3 /opt/dbspace/.syspopup.db < /usr/share/syspopup/syspopup_db.sql
 
 %postun -p /sbin/ldconfig
 
@@ -87,9 +86,12 @@ sqlite3 /opt/dbspace/.syspopup.db < /usr/share/syspopup/syspopup_db.sql
 %{_bindir}/sp_test
 %{_bindir}/syspopup-app
 %{_libdir}/libsyspopup.so.0.1.0
-/usr/share/syspopup/syspopup_db.sql
 /usr/share/packages/org.tizen.syspopup-app.xml
 %{_datadir}/popup_noti_term
+
+%attr(644,root,app) /opt/dbspace/.syspopup.db
+%attr(644,root,app) /opt/dbspace/.syspopup.db-journal
+
 
 %files devel
 %defattr(-,root,root,-)
