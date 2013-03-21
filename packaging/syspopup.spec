@@ -1,14 +1,10 @@
-
 Name:       syspopup
 Summary:    syspopup package
 Version:    0.0.89
 Release:    1
 Group:      System/Libraries
-License:    Apache License, Version 2.0
+License:    Apache-2.0
 Source0:    syspopup-%{version}.tar.gz
-Requires(post): /sbin/ldconfig
-Requires(post): /bin/touch
-Requires(postun): /sbin/ldconfig
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)
@@ -70,8 +66,7 @@ rm -rf %{buildroot}/usr/share/syspopup/syspopup_db.sql
 
 touch %{buildroot}%{_datadir}/popup_noti_term
 
-%post
-/sbin/ldconfig
+%post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
