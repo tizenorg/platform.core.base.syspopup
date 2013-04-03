@@ -1,9 +1,9 @@
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.89
+Version:    0.0.90
 Release:    1
 Group:      System/Libraries
-License:    Apache-2.0
+License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
@@ -104,3 +104,7 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
+
+%changelog
+* Tue Apr 2 2013 - Hyugdeuk Kim <hd3.kim@samsung.com>
+- Add syspopup_reset_timeout api

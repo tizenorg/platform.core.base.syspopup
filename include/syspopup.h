@@ -120,6 +120,19 @@ int syspopup_reset(bundle *b);
  */
 int syspopup_has_popup(bundle *b);
 
+/**
+ * @brief       This API reset timeout value of system popup.
+ *
+ *		This API reset timeout value of system popup.
+ *
+ * @param[in]   b	bundle received by app_reset handler (included system popup name)
+ * @param[in]   time	timeout time (sec)
+ * @return	0	if success, negative value(<0) if fail
+ * @retval	0	success
+ * @retval	-1	generic error
+ */
+int syspopup_reset_timeout(bundle *b, unsigned int time);
+
 /** @} */
 
 #endif

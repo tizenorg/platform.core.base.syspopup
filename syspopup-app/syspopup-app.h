@@ -45,7 +45,6 @@ struct appdata {
 	bundle *b;
 	char title[TITLE_BUF_LEN];
 	char content[CONTENT_BUF_LEN];
-
 	/* add more variables here */
 };
 

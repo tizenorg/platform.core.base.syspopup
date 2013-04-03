@@ -28,8 +28,16 @@
 #include "syspopup.h"
 #include "syspopup-app.h"
 
-/*#include <quickpanel.h> */
 #include <time.h>
+
+#include <dlog.h>
+
+#undef LOG_TAG
+#define LOG_TAG "SYSPOPUP-APP"
+
+#define _E(fmt, arg...) LOGE(fmt,##arg)
+#define _D(fmt, arg...) LOGD(fmt,##arg)
+
 /*
 struct quickpanel {
 	int type;
@@ -204,7 +212,7 @@ static int __app_terminate(void *data)
 {
 	struct appdata *ad = data;
 
-	printf("[SYSPOPUP] %s, %d\n", __func__, __LINE__);
+	_D("__app_terminate called");
 
 	if (ad->win)
 		evas_object_del(ad->win);
@@ -228,7 +236,7 @@ static int __app_resume(void *data)
 
 static void __prt_recvd_bundle(const char *key, const char *value, void *d)
 {
-	printf("recvd - key: %s, value: %s\n", key, value);
+	_D("recvd - key: %s, value: %s\n", key, value);
 }
 
 static void __response_cb(void *data, Evas_Object * obj, void *event_info)
@@ -311,12 +319,6 @@ int main(int argc, char *argv[])
 		.resume = __app_resume,
 		.reset = __app_reset,
 	};
-
-//	unsetenv("ELM_SCALE");
-
-	/* appcore measure time example */
-	printf("from AUL to %s(): %d msec\n", __func__,
-	       appcore_measure_time_from("APP_START_TIME"));
 
 	memset(&ad, 0x0, sizeof(struct appdata));
 	ops.data = &ad;

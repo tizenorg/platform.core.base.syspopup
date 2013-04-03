@@ -424,3 +424,33 @@ API int syspopup_has_popup(bundle *b)
 		return 0;
 }
 
+API int syspopup_reset_timeout(bundle *b, unsigned int time)
+{
+	const char *popup_name;
+	syspopup_info_t *info;
+	syspopup *sp = NULL;
+	int ret;
+
+	popup_name = _syspopup_get_name_from_bundle(b);
+	if (popup_name == NULL) {
+		_E("popup_name is null");
+		return -1;
+	}
+
+	sp = _syspopup_find(popup_name);
+	if (!sp) {
+		_E("find syspopup error");
+		return -1;
+	} else {
+		info = _syspopup_info_get(popup_name);
+		if (info == NULL) {
+			_E("get syspopup info error");
+			return -1;
+		}
+		info->timeout = time;
+		ret = _syspopup_reset_timeout(sp, info);
+	}
+
+	return ret;
+}
+

@@ -132,7 +132,6 @@ API int syspopup_create(bundle *b, syspopup_handler *handler,
 		/* Second, keydown event */
 		ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,
 					__x_rotate_cb, (void *)id);
-
 	}
 
 	return 0;

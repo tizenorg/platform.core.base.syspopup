@@ -210,10 +210,13 @@ int _syspopup_reset_timeout(syspopup *sp, syspopup_info_t *info)
 
 	if (sp->timeout_id != 0)
 		g_source_remove(sp->timeout_id);
-	sp->timeout_id = g_timeout_add_seconds(info->timeout, _timeout_handler,
+
+	if(info->timeout > 0) {
+		sp->timeout_id = g_timeout_add_seconds(info->timeout, _timeout_handler,
 					       (void *)sp->id);
-	_D("add timeout - timeout : id=%d,timeout=%d(sec)", sp->id,
-	   info->timeout);
+		_D("add timeout - timeout : id=%d,timeout=%d(sec)", sp->id, 
+			info->timeout);
+	}
 
 	return 0;
 }
