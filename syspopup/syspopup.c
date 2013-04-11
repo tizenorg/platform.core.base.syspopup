@@ -449,6 +449,7 @@ API int syspopup_reset_timeout(bundle *b, unsigned int time)
 		}
 		info->timeout = time;
 		ret = _syspopup_reset_timeout(sp, info);
+		_syspopup_info_free(info);
 	}
 
 	return ret;
