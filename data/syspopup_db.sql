@@ -21,7 +21,6 @@ INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"volume",			1,1,-1,1,1,"org.t
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"bt-syspopup",		0,0,-1,0,0,"org.tizen.bt-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"wifi-qs",			0,0,-1,0,0,"net.wifi-qs");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"poweroff-syspopup",		1,1,-1,0,0,"org.tizen.poweroff-syspopup");
-INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"drm",			0,0,5,0,0,"org.tizen.drm-popup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"lowmem-syspopup",		1,1,5,0,0,"org.tizen.lowmem-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"lowbat-syspopup",		1,1,5,0,0,"org.tizen.lowbat-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"net-popup",			0,0,-1,0,0,"org.tizen.net-popup");
@@ -32,8 +31,8 @@ INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"tickernoti-syspopup", 	1,1,-
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"usbotg-syspopup", 		0,1,-1,0,0,"org.tizen.usbotg-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"allshare-popup",            0,0,-1,0,0,"org.tizen.allshare-popup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"mmc-syspopup",  		0,1,-1,0,0,"org.tizen.mmc-syspopup");
-
 /*
+INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"drm",			0,0,5,0,0,"org.tizen.drm-popup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"incoming_call",		2,0,-1,2,2,"org.tizen.incoming_call");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"phone_lock",		2,0,-1,2,2,"org.tizen.screen_lock");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"screen_lock",		1,0,-1,0,2,"org.tizen.screen_lock");

@@ -1,6 +1,6 @@
 Name:       syspopup
 Summary:    syspopup package
-Version:    0.0.91
+Version:    0.0.92
 Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
@@ -106,5 +106,8 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/pkgconfig/syspopup-caller.pc
 
 %changelog
+* Fri Apr 12 2013 - Hyungdeuk Kim <hd3.kim@samsung.com>
+- Remove drm syspopup requested by hakjoo.ko
+
 * Tue Apr 2 2013 - Hyugdeuk Kim <hd3.kim@samsung.com>
 - Add syspopup_reset_timeout api
