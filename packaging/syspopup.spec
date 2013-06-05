@@ -3,7 +3,7 @@
 
 Name:           syspopup
 Summary:        Syspopup package
-Version:        0.0.92
+Version:        0.0.93
 Release:        0
 Group:          System/Libraries
 License:        Apache-2.0
@@ -12,6 +12,7 @@ Source1001:     %{name}.manifest
 Source1002:     %{name}-devel.manifest
 Source1003:     %{name}-caller.manifest
 Source1004:     %{name}-caller-devel.manifest
+
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)

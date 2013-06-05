@@ -31,6 +31,7 @@ INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"tickernoti-syspopup", 	1,1,-
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"usbotg-syspopup", 		0,1,-1,0,0,"org.tizen.usbotg-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"allshare-popup",            0,0,-1,0,0,"org.tizen.allshare-popup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"mmc-syspopup",  		0,1,-1,0,0,"org.tizen.mmc-syspopup");
+INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"datausage-syspopup",	1,1,-1,0,0,"org.tizen.datausage-syspopup");
 /*
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"drm",			0,0,5,0,0,"org.tizen.drm-popup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"incoming_call",		2,0,-1,2,2,"org.tizen.incoming_call");

@@ -95,6 +95,7 @@ static void __X_syspopup_term_handler(void *data)
 {
 #ifndef WAYLAND
 	syspopup *tmp;
+	syspopup *next;
 	Display *d;
 	Window win;
 
@@ -103,29 +104,33 @@ static void __X_syspopup_term_handler(void *data)
 	d = XOpenDisplay(NULL);
 	tmp = _syspopup_get_head();
 	while (tmp) {
+
+		_D("term action %d - %s", tmp->term_act, tmp->name);
+		next = tmp->next;
+
 		switch (tmp->term_act) {
 		case SYSPOPUP_TERM:
+			win = (Window) tmp->internal_data;
+
 			if (tmp->def_term_fn != NULL)
 				tmp->def_term_fn(tmp->dupped_bundle,
 						 tmp->user_data);
-
-			win = (Window) tmp->internal_data;
 			XKillClient(d, win);
-			/*XDestroyWindow(d, win);*/ 
+			/*XDestroyWindow(d, win);*/
 			/* TODO :modify for multi popup */
 			break;
 		case SYSPOPUP_HIDE:
+			win = (Window) tmp->internal_data;
+
 			if (tmp->def_term_fn != NULL)
 				tmp->def_term_fn(tmp->dupped_bundle,
 						 tmp->user_data);
-
-			win = (Window) tmp->internal_data;
 			XUnmapWindow(d, win);
 			break;
 		default:
 			_D("term action IGNORED - %s", tmp->name);
 		}
-		tmp = tmp->next;
+		tmp = next;
 	}
 
 	XCloseDisplay(d);
