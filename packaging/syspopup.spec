@@ -3,7 +3,7 @@
 
 Name:           syspopup
 Summary:        Syspopup package
-Version:        0.0.93
+Version:        0.0.95
 Release:        0
 Group:          System/Libraries
 License:        Apache-2.0
@@ -124,6 +124,9 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/pkgconfig/syspopup-caller.pc
 
 %changelog
+* Fri Jun 21 2013 - Hyungdeuk Kim <hd3.kim@samsung.com>
+- Change end key term info of wifi-qs
+
 * Fri Apr 12 2013 - Hyungdeuk Kim <hd3.kim@samsung.com>
 - Remove drm syspopup requested by hakjoo.ko
 
