@@ -280,6 +280,7 @@ int X_syspopup_process_keydown(int id, const char *keyname)
 	return 0;
 }
 
+#ifdef ROTATE_USING_X_CLIENT
 int X_syspopup_process_rotate(int id)
 {
 #ifndef WAYLAND
@@ -301,6 +302,7 @@ int X_syspopup_process_rotate(int id)
 
 	return 0;
 }
+#endif
 
 #ifndef WAYLAND
 int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
