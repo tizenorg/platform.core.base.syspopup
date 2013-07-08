@@ -1,0 +1,8 @@
+Change-Id: I39290dcf79708e5201a82e132a4d06beb02d1d33
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 10:07:03 -0700
+Reviewed-on: https://review.tizen.org/gerrit/4512
+Project: platform/core/base/syspopup
+Branch: refs/heads/tizen
