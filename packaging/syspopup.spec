@@ -5,7 +5,7 @@ Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
-Source1001: 	syspopup.manifest
+Source1001: %{name}.manifest
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)
