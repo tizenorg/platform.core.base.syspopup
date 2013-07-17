@@ -5,7 +5,10 @@ Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
 Source0:    syspopup-%{version}.tar.gz
-Source1001: 	syspopup.manifest
+Source1001:	%{name}.manifest
+Source1002:	%{name}-devel.manifest
+Source1003:	%{name}-caller.manifest
+Source1004:	%{name}-caller-devel.manifest
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)
@@ -51,7 +54,7 @@ syspopup-caller development package for popup
 
 %prep
 %setup -q
-cp %{SOURCE1001} .
+cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
 %build
 %cmake . -DEXTRA_CFLAGS=-fPIC
@@ -90,7 +93,7 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 
 
 %files devel
-%manifest %{name}.manifest
+%manifest %{name}-devel.manifest
 %defattr(-,root,root,-)
 %{_includedir}/SLP_SYSPOPUP_PG.h
 %{_includedir}/syspopup.h
@@ -98,12 +101,12 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/pkgconfig/syspopup.pc
 
 %files caller
-%manifest %{name}.manifest
+%manifest %{name}-caller.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
 
 %files caller-devel
-%manifest %{name}.manifest
+%manifest %{name}-caller-devel.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
