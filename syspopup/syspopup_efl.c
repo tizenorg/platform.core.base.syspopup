@@ -35,17 +35,6 @@
 
 #define WIN_PROP_NAME "SYSTEM_POPUP"
 
-static void __elm_popupwin_del_cb(void *data, Evas * e, Evas_Object * obj,
-				  void *event_info)
-{
-	int id;
-
-	id = (int)data;
-	_D("callback del called, destroy internal data - id = %d\n", id);
-
-	_syspopup_del(id);
-}
-
 static Eina_Bool __x_keydown_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
@@ -141,9 +130,6 @@ API int syspopup_create(bundle *b, syspopup_handler *handler,
 
 		ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __x_keydown_cb,
 					(void *)id);
-
-		evas_object_event_callback_add(parent, EVAS_CALLBACK_DEL,
-					 __elm_popupwin_del_cb, (void *)id);
 
 		/* X_syspopup_core should process 2 events */
 		/* First, rotate event */
