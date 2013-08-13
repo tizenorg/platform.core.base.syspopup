@@ -33,9 +33,7 @@
 #include <Ecore_X.h>
 #endif
 
-#define WIN_PROP_NAME "SYSTEM_POPUP"
-
-static Eina_Bool __x_keydown_cb(void *data, int type, void *event)
+static Eina_Bool __x_keypress_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
 	Ecore_Event_Key *ev = event;
@@ -43,9 +41,9 @@ static Eina_Bool __x_keydown_cb(void *data, int type, void *event)
 	if (ev == NULL)
 		return 0;
 
-	X_syspopup_process_keydown(id, ev->keyname);
+	X_syspopup_process_keypress(id, ev->keyname);
 
-	return ECORE_CALLBACK_DONE;
+	return ECORE_CALLBACK_RENEW;
 }
 
 #ifdef ROTATE_USING_X_CLIENT
@@ -128,22 +126,14 @@ API int syspopup_create(bundle *b, syspopup_handler *handler,
 			return -1;
 		}
 
-		ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __x_keydown_cb,
-					(void *)id);
-
 		/* X_syspopup_core should process 2 events */
 		/* First, rotate event */
-		/* Second, keydown event */
+		/* Second, keypress event */
+		utilx_grab_key(dpy, xwin, KEY_BACK, TOP_POSITION_GRAB);
+		ecore_event_handler_add(ECORE_EVENT_KEY_UP, __x_keypress_cb, (void *)id);
+
 #ifdef ROTATE_USING_X_CLIENT
 		ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,__x_rotate_cb, (void *)id);
-#else
-		ecore_x_icccm_name_class_set(xwin, WIN_PROP_NAME, WIN_PROP_NAME);
-		if (elm_win_wm_rotation_supported_get(parent)) {
-			int rots[4] = { 0, 90, 180, 270 };
-			elm_win_wm_rotation_available_rotations_set(parent, &rots, 4);
-		} else {
-			_E("win rotation no supported");
-		}
 #endif
 	}
 #endif
