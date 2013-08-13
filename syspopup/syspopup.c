@@ -31,6 +31,8 @@
 #include <X11/Xutil.h>
 #endif
 
+#define WIN_PROP_NAME "SYSTEM_POPUP"
+
 #ifndef WAYLAND
 static int __utilx_ss_get_window_property(Display *dpy, Window win, Atom atom,
 					  Atom type, unsigned int *val,
@@ -242,18 +244,22 @@ int X_syspopup_rotation_get(Display *dpy, Window win)
 }
 #endif
 
-int X_syspopup_process_keydown(int id, const char *keyname)
+int X_syspopup_process_keypress(int id, const char *keyname)
 {
 #ifndef WAYLAND
 	Display *d;
 	Window win;
 	syspopup *sp = NULL;
 
-	if (strcmp(keyname, KEY_END) == 0) {
+	_D("key press - %s", keyname);
+
+	if ((strcmp(keyname, KEY_END) == 0) ||
+		(strcmp(keyname, "Escape") == 0))
+	{
 		d = XOpenDisplay(NULL);
 		sp = _syspopup_find_by_id(id);
 		if (sp != NULL) {
-			_D("find key down - %s", sp->name);
+			_D("find - %s / endkey_act - %d", sp->name, sp->endkey_act);
 			if (sp->endkey_act == SYSPOPUP_KEYEND_TERM) {
 				if (sp->def_term_fn != NULL)
 					sp->def_term_fn(sp->dupped_bundle,
@@ -268,7 +274,6 @@ int X_syspopup_process_keydown(int id, const char *keyname)
 				win = (Window) sp->internal_data;
 				XUnmapWindow(d, win);
 			}
-
 		} else {
 			_E("no find key down");
 		}
@@ -301,6 +306,17 @@ int X_syspopup_process_rotate(int id)
 #endif
 
 	return 0;
+}
+#else
+static void __efl_rotation_set(Evas_Object* win, Ecore_X_Window xwin)
+{
+	ecore_x_icccm_name_class_set(xwin, WIN_PROP_NAME, WIN_PROP_NAME);
+	if (elm_win_wm_rotation_supported_get(win)) {
+		int rots[4] = { 0, 90, 180, 270 };
+		elm_win_wm_rotation_available_rotations_set(win, &rots, 4);
+	} else {
+		_E("win rotation no supported");
+	}
 }
 #endif
 
@@ -340,7 +356,7 @@ int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
 		_syspopup_info_free(info);
 		return -1;
 	}
-	
+
 	sp->name = strdup(info->name);
 	sp->def_term_fn = handler->def_term_fn;
 	sp->def_timeout_fn = handler->def_timeout_fn;
@@ -366,7 +382,11 @@ int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
 		__X_syspopup_disable_focus (dpy, xwin);
 	}
 
+#ifdef ROTATE_USING_X_CLIENT
 	rotate_func(dpy, xwin, sp);
+#else
+	__efl_rotation_set((Evas_Object* )win,(Ecore_X_Window)xwin);
+#endif
 
 	if (is_unviewable == 1) {
 		XMapWindow(dpy, xwin);
@@ -382,8 +402,8 @@ int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
  * @brief       This API reset created the system popup's properties
  *
  *		This API reset created the system popup's properties based on
- *		system popup information DB after extracting popup name from 
- *		given bundle system popup properties to be reset : timeout, 
+ *		system popup information DB after extracting popup name from
+ *		given bundle system popup properties to be reset : timeout,
  *		default action type, ....
  *
  * @param[in]   b		bundle received by app_reset handler
@@ -398,7 +418,6 @@ int X_syspopup_reset(bundle *b)
 	const char *popup_name;
 	syspopup_info_t *info;
 	syspopup *sp = NULL;
-	int (*rotate_func) (Display *, Window, syspopup *);
 
 	popup_name = _syspopup_get_name_from_bundle(b);
 	if (popup_name == NULL)
@@ -427,9 +446,14 @@ int X_syspopup_reset(bundle *b)
 		if (info->focus == 1) {
 			__X_syspopup_disable_focus (d, win);
 		}
+
+#ifdef ROTATE_USING_X_CLIENT
+		int (*rotate_func) (Display *, Window, syspopup *);
 		rotate_func = sp->rotate_cb;
 		rotate_func(d, win, sp);
-
+#else
+		__efl_rotation_set((Evas_Object *)sp->win, (Ecore_X_Window)win);
+#endif
 		XMapWindow(d, win);
 		/*XMapRaised(d,win);*/
 		XCloseDisplay(d);
