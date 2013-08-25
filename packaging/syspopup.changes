@@ -1,5 +1,7 @@
 * Wed Sep 04 2013 Maciej Wereski <m.wereski@partner.samsung.com> accepted/tizen/20130710.221500@b5a9f8a
 - Fix RPMLINT errors
+
+* Sun Aug 25 2013 Chengwei Yang <chengwei.yang@intel.com> accepted/tizen/20130710.221500@1cd6f5e
 - Fix manifests
 - resetting manifest requested domain to floor
 - remove drm syspopup
@@ -12,4 +14,5 @@
 - merge with master
 - sync
 - Tizen 2.1 base
+- tizen beta release
 
