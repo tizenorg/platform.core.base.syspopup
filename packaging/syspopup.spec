@@ -3,7 +3,7 @@ Summary:    syspopup package
 Version:    0.0.92
 Release:    1
 Group:      System/Libraries
-License:    Apache License, Version 2.0
+License:    Apache-2.0
 Source0:    syspopup-%{version}.tar.gz
 Source1001:	%{name}.manifest
 Source1002:	%{name}-devel.manifest
@@ -27,7 +27,7 @@ syspopup package for popup
 
 %package devel
 Summary:    syspopup development package
-Group:      Development/Libraries
+Group:      System/Libraries
 Requires:   %{name} = %{version}-%{release}
 
 %description devel
@@ -35,7 +35,7 @@ syspopup development package popup
 
 %package caller
 Summary:    syspopup-caller package
-Group:      TO_BE/FILLED_IN
+Group:      System/Libraries
 Requires:   %{name} = %{version}-%{release}
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -45,7 +45,7 @@ syspopup-caller package for popup
 
 %package caller-devel
 Summary:    syspopup-caller development package
-Group:      TO_BE/FILLED_IN
+Group:      System/Development
 Requires:   %{name} = %{version}-%{release}
 
 %description caller-devel

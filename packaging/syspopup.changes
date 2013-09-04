@@ -1,0 +1,15 @@
+* Wed Sep 04 2013 Maciej Wereski <m.wereski@partner.samsung.com> accepted/tizen/20130710.221500@b5a9f8a
+- Fix RPMLINT errors
+- Fix manifests
+- resetting manifest requested domain to floor
+- remove drm syspopup
+- Merge "fix memory leak" into tizen_2.1
+- fix memory leak
+- fix libdir in pc file
+- add reset timer new api / fix hardcording of lib path / fix build on x86_64
+- Fixed build on x86_64.
+- Fixed hardcoding of lib path in .pc file
+- merge with master
+- sync
+- Tizen 2.1 base
+
