@@ -1,0 +1,11 @@
+Code-Review+1: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Verified+1: Anas Nashif <anas.nashif@intel.com>
+Code-Review+1: Lukasz Stelmach <l.stelmach@samsung.com>
+Code-Review+1: Jacek Pielaszkiewicz <j.pielaszkie@samsung.com>
+Code-Review+1: Karol Lewandowski <k.lewandowsk@samsung.com>
+Code-Review+2: Young Ik Cho <youngik.cho@samsung.com>
+Submitted-by: Anas Nashif <anas.nashif@intel.com>
+Submitted-at: Mon, 16 Sep 2013 18:19:18 -0700
+Reviewed-on: https://review.tizen.org/gerrit/8628
+Project: platform/core/base/syspopup
+Branch: refs/heads/tizen
