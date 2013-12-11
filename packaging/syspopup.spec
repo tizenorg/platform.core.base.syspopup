@@ -1,3 +1,5 @@
+%bcond_without x
+
 Name:       syspopup
 Summary:    syspopup package
 Version:    0.0.92
@@ -15,7 +17,9 @@ BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(dbus-glib-1)
+%if !%{without x}
 BuildRequires:  pkgconfig(x11)
+%endif
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)

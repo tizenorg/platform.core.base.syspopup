@@ -25,9 +25,11 @@
 #include "syspopup.h"
 #include "syspopup_api.h"
 #include "simple_util.h"
+
+#ifndef WAYLAND_PLATFORM
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
-
+#endif
 static int __utilx_ss_get_window_property(Display *dpy, Window win, Atom atom,
 					  Atom type, unsigned int *val,
 					  unsigned int len)
@@ -92,6 +94,7 @@ static void __X_syspopup_term_handler(void *data)
 	Display *d;
 	Window win;
 
+#ifndef WAYLAND_PLATFORM
 	_D("enter syspopup term handler");
 
 	d = XOpenDisplay(NULL);
@@ -124,6 +127,7 @@ static void __X_syspopup_term_handler(void *data)
 
 	XCloseDisplay(d);
 	/*TODO : if there is no popup window, kill client*/
+#endif
 }
 
 static gboolean __X_syspopup_timeout_handler(void *user_data)
@@ -135,6 +139,7 @@ static gboolean __X_syspopup_timeout_handler(void *user_data)
 
 	id = (int)user_data;
 
+#ifndef WAYLAND_PLATFORM
 	d = XOpenDisplay(NULL);
 
 	sp = _syspopup_find_by_id(id);
@@ -149,6 +154,7 @@ static gboolean __X_syspopup_timeout_handler(void *user_data)
 	}
 
 	XCloseDisplay(d);
+#endif
 
 	return 0;
 }
@@ -169,6 +175,7 @@ static int __X_syspopup_change_xwin_type(Display *dpy, Window win)
 
 static int __X_syspopup_disable_focus(Display *dpy, Window win)
 {
+#ifndef WAYLAND_PLATFORM
 	XWMHints *hints;
 
 	hints = XAllocWMHints();
@@ -180,6 +187,7 @@ static int __X_syspopup_disable_focus(Display *dpy, Window win)
 
 	XSetWMHints(dpy, win, hints);
 	XFree(hints);
+#endif
 
 	return 0;
 }
@@ -193,6 +201,7 @@ int X_syspopup_rotation_get(Display *dpy, Window win)
 
 	int angles[2];
 
+#ifndef WAYLAND_PLATFORM
 	Atom atom_active_win;
 	Atom atom_win_rotate_angle;
 
@@ -219,6 +228,7 @@ int X_syspopup_rotation_get(Display *dpy, Window win)
 
 	if (ret != -1)
 		return rotation;
+#endif
 
 	return -1;
 }
@@ -229,6 +239,7 @@ int X_syspopup_process_keydown(int id, const char *keyname)
 	Window win;
 	syspopup *sp = NULL;
 
+#ifndef WAYLAND_PLATFORM
 	if (strcmp(keyname, KEY_END) == 0) {
 		d = XOpenDisplay(NULL);
 		sp = _syspopup_find_by_id(id);
@@ -255,6 +266,7 @@ int X_syspopup_process_keydown(int id, const char *keyname)
 
 		XCloseDisplay(d);
 	}
+#endif
 
 	return 0;
 }
@@ -272,9 +284,11 @@ int X_syspopup_process_rotate(int id)
 
 	win = (Window) sp->internal_data;
 
+#ifndef WAYLAND_PLATFORM
 	d = XOpenDisplay(NULL);
 	sp->rotate_cb(d, win, sp);
 	XCloseDisplay(d);
+#endif
 
 	return 0;
 }
@@ -392,6 +406,7 @@ int X_syspopup_reset(bundle *b)
 			free(sp->dupped_bundle);
 		sp->dupped_bundle = bundle_dup(b);
 
+#ifndef WAYLAND_PLATFORM
 		d = XOpenDisplay(NULL);
 		win = (Window) sp->internal_data;
 		utilx_set_system_notification_level(d, win, info->prio);
@@ -407,6 +422,7 @@ int X_syspopup_reset(bundle *b)
 		XCloseDisplay(d);
 
 		_syspopup_info_free(info);
+#endif
 	}
 	return 0;
 }
