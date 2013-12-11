@@ -24,7 +24,10 @@
 #ifndef __SYSPOPUP_H__
 #define __SYSPOPUP_H__
 
+#ifndef WAYLAND_PLATFORM
 #include <utilX.h>
+#endif
+
 #include <bundle.h>
 #include <Elementary.h>
 
