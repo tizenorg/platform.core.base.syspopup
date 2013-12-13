@@ -23,7 +23,10 @@
 
 #include <stdio.h>
 #include <appcore-efl.h>
+
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 
 #include "syspopup.h"
 #include "syspopup-app.h"
@@ -176,8 +179,12 @@ static Evas_Object *__create_win(const char *name)
 
 		evas_object_smart_callback_add(eo, "delete,request",
 					       __win_del, NULL);
+
+#ifndef WAYLAND
 		ecore_x_window_size_get(ecore_x_window_root_first_get(),
 					&w, &h);
+#endif
+
 		evas_object_resize(eo, w, h);
 	}
 
