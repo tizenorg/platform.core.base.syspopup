@@ -1,3 +1,6 @@
+%bcond_with x
+%bcond_with wayland
+
 Name:       syspopup
 Summary:    syspopup package
 Version:    0.0.92
@@ -13,9 +16,11 @@ BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(dbus-glib-1)
+%if %{with x}
+BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
+%endif
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
@@ -56,7 +61,16 @@ syspopup-caller development package for popup
 %setup -q
 cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
+%if %{with x}
 %build
+%cmake . -Dwith_x=TRUE
+%endif
+
+%if %{with wayland} && !%{with x}
+%build
+%cmake . -Dwith_wayland=TRUE
+%endif
+
 %cmake . -DEXTRA_CFLAGS=-fPIC
 
 make %{?jobs:-j%jobs}
