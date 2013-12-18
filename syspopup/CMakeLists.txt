@@ -19,7 +19,15 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-pkg_check_modules(sppkgs REQUIRED dlog bundle sqlite3 glib-2.0 evas elementary utilX ecore-x x11 ecore ecore-input dbus-glib-1)
+SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 evas elementary ecore ecore-input dbus-glib-1")
+
+IF (with_x)
+    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} utilX ecore-x x11)
+ENDIF(with_x)
+
+IF (with_wayland)
+    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
+ENDIF (with_wayland)
 
 FOREACH(flag ${sppkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
