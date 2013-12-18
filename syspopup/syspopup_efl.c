@@ -28,7 +28,10 @@
 #include <Evas.h>
 #include <Ecore.h>
 #include <Ecore_Input.h>
+
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 
 static void __elm_popupwin_del_cb(void *data, Evas * e, Evas_Object * obj,
 				  void *event_info)
@@ -57,6 +60,8 @@ static Eina_Bool __x_keydown_cb(void *data, int type, void *event)
 static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
+
+#ifndef WAYLAND
 	Ecore_X_Event_Client_Message *ev = event;
 
 	if (!event)
@@ -64,10 +69,12 @@ static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
 
 	if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE)
 		X_syspopup_process_rotate(id);
+#endif
 
 	return ECORE_CALLBACK_RENEW;
 }
 
+#ifndef WAYLAND
 static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 {
 	int rotation;
@@ -83,10 +90,12 @@ static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 
 	return 0;
 }
+#endif
 
 API int syspopup_create(bundle *b, syspopup_handler *handler,
 			Evas_Object *parent, void *user_data)
 {
+#ifndef WAYLAND
 	Ecore_X_Window xwin;
 	Display *dpy;
 	const char *popup_name;
@@ -133,6 +142,7 @@ API int syspopup_create(bundle *b, syspopup_handler *handler,
 		ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,
 					__x_rotate_cb, (void *)id);
 	}
+#endif
 
 	return 0;
 }
