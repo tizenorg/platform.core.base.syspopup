@@ -23,7 +23,10 @@
 
 #include <stdio.h>
 #include <appcore-efl.h>
+
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 
 #include "syspopup.h"
 #include "syspopup-app.h"
@@ -163,6 +166,7 @@ static int rotate(enum appcore_rm m, void *data)
 
 static Evas_Object *__create_win(const char *name)
 {
+	Ecore_Evas *ee;
 	Evas_Object *eo;
 	int w;
 	int h;
@@ -176,8 +180,9 @@ static Evas_Object *__create_win(const char *name)
 
 		evas_object_smart_callback_add(eo, "delete,request",
 					       __win_del, NULL);
-		ecore_x_window_size_get(ecore_x_window_root_first_get(),
-					&w, &h);
+
+		ee = ecore_evas_ecore_evas_get(evas_object_evas_get(eo));
+		evas_output_size_get(ee, &w, &h);
 		evas_object_resize(eo, w, h);
 	}
 
