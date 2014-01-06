@@ -19,7 +19,13 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-pkg_check_modules(sppkgs REQUIRED dlog bundle sqlite3 glib-2.0 evas elementary utilX ecore-x x11 ecore ecore-input dbus-glib-1)
+SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 evas elementary ecore ecore-input dbus-glib-1")
+
+IF (with_wayland)
+    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
+ELSE (with_wayland)
+    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} utilX ecore-x x11)
+ENDIF (with_wayland)
 
 FOREACH(flag ${sppkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -58,7 +64,11 @@ SET_TARGET_PROPERTIES(syspopup PROPERTIES SOVERSION 0.1.0)
 
 # pkgconfig file
 #CONFIGURE_FILE(syspopup.pc.in syspopup/syspopup.pc @ONLY)
-CONFIGURE_FILE(syspopup.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
+IF (with_wayland)
+    CONFIGURE_FILE(syspopup-wayland.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
+ELSE (with_wayland)
+    CONFIGURE_FILE(syspopup-x.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
+ENDIF (with_wayland)
 
 ### Install ###
 INSTALL(TARGETS syspopup DESTINATION ${LIB_INSTALL_DIR} COMPONENT RuntimeLibraries)

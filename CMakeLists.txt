@@ -19,6 +19,10 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
+IF (with_wayland)
+    ADD_DEFINITIONS("-DWAYLAND")
+ENDIF(with_wayland)
+
 pkg_check_modules(libpkgs REQUIRED aul dlog bundle sqlite3 glib-2.0 dbus-glib-1)
 
 FOREACH(flag ${libpkgs_CFLAGS})
