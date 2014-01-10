@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
-
+BuildRequires:  pkgconfig(ecore-x)
 
 %description
 syspopup package for popup
