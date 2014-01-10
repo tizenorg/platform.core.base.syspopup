@@ -1,0 +1,9 @@
+Code-Review+1: Patrick McCarty <patrick.mccarty@linux.intel.com>
+Code-Review+2: Brad Peters <brad.t.peters@intel.com>
+Verified+1: Brad Peters <brad.t.peters@intel.com>
+Verified+1: li min <liminx.li@intel.com>
+Submitted-by: Brad Peters <brad.t.peters@intel.com>
+Submitted-at: Fri, 10 Jan 2014 13:51:24 -0800
+Reviewed-on: https://review.tizen.org/gerrit/13958
+Project: platform/core/base/syspopup
+Branch: refs/heads/tizen
