@@ -20,11 +20,11 @@ BuildRequires:  pkgconfig(dbus-glib-1)
 %if %{with x}
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(ecore-x)
 %endif
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
-BuildRequires:  pkgconfig(ecore-x)
 
 %description
 syspopup package for popup
