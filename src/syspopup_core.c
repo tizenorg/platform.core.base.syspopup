@@ -26,6 +26,12 @@
 #include <string.h>
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <sys/types.h>
+#include <grp.h>
+
+/* For multi-user support */
+#include <tzplatform_config.h>
+
 #include "syspopup_core.h"
 #include "simple_util.h"
 
@@ -237,7 +243,7 @@ const char *_syspopup_get_name_from_bundle(bundle *b)
 {
 	const char *name;
 
-	if (getuid() != 0 && getuid() != 5000) {
+	if (getuid() != 0 && getuid() != tzplatform_getuid(TZ_USER_NAME)) {
 		_E("syspopup permission error");
 		return NULL;
 	}
