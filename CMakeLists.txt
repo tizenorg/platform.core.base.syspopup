@@ -23,7 +23,7 @@ IF (with_wayland)
     ADD_DEFINITIONS("-DWAYLAND")
 ENDIF(with_wayland)
 
-pkg_check_modules(libpkgs REQUIRED aul dlog bundle sqlite3 glib-2.0 dbus-glib-1)
+pkg_check_modules(libpkgs REQUIRED aul dlog bundle sqlite3 glib-2.0 dbus-glib-1 libtzplatform-config)
 
 FOREACH(flag ${libpkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
