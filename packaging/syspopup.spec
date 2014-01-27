@@ -76,6 +76,9 @@ make %{?jobs:-j%jobs}
 %make_install
 mkdir -p %{buildroot}/usr/share/license
 install LICENSE %{buildroot}/usr/share/license/%{name}
+install LICENSE %{buildroot}/usr/share/license/%{name}-devel
+install LICENSE %{buildroot}/usr/share/license/%{name}-caller
+install LICENSE %{buildroot}/usr/share/license/%{name}-caller-devel
 
 mkdir -p %{buildroot}%{TZ_SYS_DB}
 sqlite3 %{buildroot}%{TZ_SYS_DB}/.syspopup.db < %{buildroot}/usr/share/syspopup/syspopup_db.sql
@@ -113,11 +116,13 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_includedir}/syspopup.h
 %{_libdir}/libsyspopup.so
 %{_libdir}/pkgconfig/syspopup.pc
+/usr/share/license/%{name}-devel
 
 %files caller
 %manifest %{name}-caller.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
+/usr/share/license/%{name}-caller
 
 %files caller-devel
 %manifest %{name}-caller-devel.manifest
@@ -125,6 +130,8 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
+/usr/share/license/%{name}-caller-devel
+
 
 %changelog
 * Tue Aug 13 2013 - Hyungdeuk Kim <hd3.kim@samsung.com>
