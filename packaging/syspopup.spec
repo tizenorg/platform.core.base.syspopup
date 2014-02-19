@@ -64,7 +64,7 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 %build
 %cmake . \
 %if %{with wayland} && !%{with x}
--Dwith_wayland=TRUE\
+-Dwith_wayland=TRUE \
 %endif
 -DEXTRA_CFLAGS=-fPIC
 
