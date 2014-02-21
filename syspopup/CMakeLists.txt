@@ -19,7 +19,7 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 evas elementary ecore ecore-input dbus-glib-1")
+SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 evas elementary ecore ecore-input dbus-glib-1 libtzplatform-config")
 
 IF (with_wayland)
     pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})

@@ -25,10 +25,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sqlite3.h>
+
+/* For multi-user support */
+#include <tzplatform_config.h>
+
 #include "syspopup_db.h"
 #include "simple_util.h"
 
-#define SYSPOPUP_DB_PATH	"/opt/dbspace/.syspopup.db"
+#define SYSPOPUP_DB_PATH tzplatform_mkpath(TZ_SYS_DB, ".syspopup.db")
 #define QUERY_MAXLEN	4096
 
 #define SP_INFO_TBL		"syspopup_info"
