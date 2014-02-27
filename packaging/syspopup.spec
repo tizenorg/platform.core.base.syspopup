@@ -67,7 +67,13 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 %if %{with wayland} && !%{with x}
 -Dwith_wayland=TRUE \
 %endif
--DEXTRA_CFLAGS=-fPIC
+%if %{with x}
+-DX11_SUPPORT=On \
+%else
+-DX11_SUPPORT=Off \
+%endif
+-DEXTRA_CFLAGS=-fPIC \
+  #eol
 
 make %{?jobs:-j%jobs}
 

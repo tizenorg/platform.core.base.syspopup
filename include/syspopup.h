@@ -24,7 +24,7 @@
 #ifndef __SYSPOPUP_H__
 #define __SYSPOPUP_H__
 
-#ifndef WAYLAND
+#ifdef HAVE_X11
 #include <utilX.h>
 #endif
 
