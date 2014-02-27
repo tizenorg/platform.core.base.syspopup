@@ -26,12 +26,12 @@
 #include "syspopup_api.h"
 #include "simple_util.h"
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #endif
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 static int __utilx_ss_get_window_property(Display *dpy, Window win, Atom atom,
 					  Atom type, unsigned int *val,
 					  unsigned int len)
@@ -93,7 +93,7 @@ static Window get_active_win(Display *dpy, Window win, Atom property)
 
 static void __X_syspopup_term_handler(void *data)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	syspopup *tmp;
 	Display *d;
 	Window win;
@@ -135,7 +135,7 @@ static void __X_syspopup_term_handler(void *data)
 
 static gboolean __X_syspopup_timeout_handler(void *user_data)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	syspopup *sp = NULL;
 	Display *d;
 	int id;
@@ -161,7 +161,7 @@ static gboolean __X_syspopup_timeout_handler(void *user_data)
 	return 0;
 }
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 static int __X_syspopup_change_xwin_type(Display *dpy, Window win)
 {
 	Atom win_type_atom;
@@ -177,7 +177,7 @@ static int __X_syspopup_change_xwin_type(Display *dpy, Window win)
 }
 #endif
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 static int __X_syspopup_disable_focus(Display *dpy, Window win)
 {
 	XWMHints *hints;
@@ -196,7 +196,7 @@ static int __X_syspopup_disable_focus(Display *dpy, Window win)
 }
 #endif
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 int X_syspopup_rotation_get(Display *dpy, Window win)
 {
 	Window active_win;
@@ -239,7 +239,7 @@ int X_syspopup_rotation_get(Display *dpy, Window win)
 
 int X_syspopup_process_keydown(int id, const char *keyname)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	Display *d;
 	Window win;
 	syspopup *sp = NULL;
@@ -277,7 +277,7 @@ int X_syspopup_process_keydown(int id, const char *keyname)
 
 int X_syspopup_process_rotate(int id)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	Display *d;
 	Window win;
 	syspopup *sp = NULL;
@@ -297,7 +297,7 @@ int X_syspopup_process_rotate(int id)
 	return 0;
 }
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
 		    int (*rotate_func) (Display*, Window, syspopup*),
 		    syspopup_handler *handler, void *user_data)
@@ -387,7 +387,7 @@ int X_make_syspopup(bundle *b, Display *dpy, Window xwin, void *win,
  */
 int X_syspopup_reset(bundle *b)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	const char *popup_name;
 	syspopup_info_t *info;
 	syspopup *sp = NULL;

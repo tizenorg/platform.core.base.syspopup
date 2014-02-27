@@ -64,8 +64,10 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
 %build
 %cmake . \
-%if %{with wayland} && !%{with x}
--Dwith_wayland=TRUE \
+%if %{with wayland}
+-DWAYLAND_SUPPORT=On \
+%else
+-DWAYLAND_SUPPORT=Off \
 %endif
 %if %{with x}
 -DX11_SUPPORT=On \

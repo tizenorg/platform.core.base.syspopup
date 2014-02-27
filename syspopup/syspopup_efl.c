@@ -29,7 +29,7 @@
 #include <Ecore.h>
 #include <Ecore_Input.h>
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 #include <Ecore_X.h>
 #endif
 
@@ -61,7 +61,7 @@ static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 	Ecore_X_Event_Client_Message *ev = event;
 
 	if (!event)
@@ -74,7 +74,7 @@ static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
 	return ECORE_CALLBACK_RENEW;
 }
 
-#ifndef WAYLAND
+#ifdef HAVE_X
 static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 {
 	int rotation;
@@ -95,7 +95,7 @@ static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 API int syspopup_create(bundle *b, syspopup_handler *handler,
 			Evas_Object *parent, void *user_data)
 {
-#ifndef WAYLAND
+#ifdef HAVE_X
 	Ecore_X_Window xwin;
 	Display *dpy;
 	const char *popup_name;
