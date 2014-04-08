@@ -82,11 +82,13 @@ static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 }
 #endif
 #else
+#ifndef WAYLAND
 static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
 {
 	return 0;
 }
-#endif
+#endif /* WAYLAND */
+#endif /* ROTATE_USING_X_CLIENT */
 
 API int syspopup_create(bundle *b, syspopup_handler *handler,
 			Evas_Object *parent, void *user_data)
