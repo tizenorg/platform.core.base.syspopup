@@ -61,6 +61,7 @@ syspopup-caller development package for popup
 
 %prep
 %setup -q
+sed -i %{SOURCE1001} -e "s|TZ_SYS_DB|%TZ_SYS_DB|g"
 cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
 %build

@@ -3,6 +3,6 @@
                 <domain name="_" />
         </request>
 	<assign>
-		<filesystem path="/opt/dbspace/.syspopup.db*" label="System" />
+		<filesystem path="TZ_SYS_DB/.syspopup.db*" label="System" />
 	</assign>
 </manifest>
