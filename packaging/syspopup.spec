@@ -68,7 +68,7 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 %if %{with wayland} && !%{with x}
 -Dwith_wayland=TRUE \
 %endif
--DEXTRA_CFLAGS=-fPIC
+-DEXTRA_CFLAGS="-fPIC -lsmack"
 
 make %{?jobs:-j%jobs}
 
