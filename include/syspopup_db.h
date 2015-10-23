@@ -58,4 +58,3 @@ syspopup_info_t *_syspopup_info_get(const char *popup_name);
 void _syspopup_info_free(syspopup_info_t *pinfo);
 
 #endif
-

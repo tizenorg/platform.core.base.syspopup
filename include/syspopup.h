@@ -33,8 +33,8 @@
 
 /**
  * @mainpage
- * 
- * This is System Popup Library 
+ *
+ * This is System Popup Library
  * This library help to create system popup application & to launch/destroy system popup application
  *
  */
@@ -42,21 +42,21 @@
 /**
  * @close
  * @ingroup APPLICATION_FRAMEWORK
- * @defgroup syspopup System Popup Library 
+ * @defgroup syspopup System Popup Library
  * @{
  */
 
 /**
- * @file        syspopup.h 
+ * @file        syspopup.h
  * @brief       System Popup UI Library
  *
  * Patched by   Knhoon Baik <knhoon.baik@samsung.com>
- * Patched by	Noha Park <noha.park@samsung.com> 
+ * Patched by	Noha Park <noha.park@samsung.com>
  */
 
 /**
  * @defgroup syspopup_ui	Helper Library to create system popup application
- * @ingroup syspopup 
+ * @ingroup syspopup
  * @brief			Helper Library to create system popup application
  */
 
@@ -65,8 +65,8 @@
  * @{
  */
 
-/** 
- *@brief action handler supplied by user 
+/**
+ * @brief action handler supplied by user
  *	def_term_fn is called when event to destroy all system popup occur
  *	def_timeout_fn is called when the system popup's timeout is expired
  */
@@ -82,7 +82,7 @@ typedef struct _syspopup_handler syspopup_handler;
 /**
  * @brief       This API make elm system popup window
  *
- *              This API make elm system popup window. 
+ *              This API make elm system popup window.
  *		and then, make given elm system popup window as system popup type
  *		and set system popup properties based on system popup information DB.\n
  *		system popup properties to be set : timeout, default action type, ....
@@ -112,12 +112,12 @@ int syspopup_create(bundle *b, syspopup_handler *handler,
 int syspopup_reset(bundle *b);
 
 /**
- * @brief       This API ask that the system popup is created and is running 
+ * @brief       This API ask that the system popup is created and is running
  *
- *		This API ask that the the system popup with popup name is created and is running after extracting popup name from given bundle. 
+ *		This API ask that the the system popup with popup name is created and is running after extracting popup name from given bundle.
  *
  * @param[in]   b		bundle received by app_reset handler (included system popup name)
- * @return	true / false      
+ * @return	true / false
  * @retval	1	app already has the system popup
  * @retval      0	app has not the system popup
  */
@@ -139,4 +139,3 @@ int syspopup_reset_timeout(bundle *b, unsigned int time);
 /** @} */
 
 #endif
-

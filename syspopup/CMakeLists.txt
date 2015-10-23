@@ -19,7 +19,7 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 evas elementary ecore ecore-input dbus-glib-1 libtzplatform-config")
+SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 gio-2.0 evas elementary ecore ecore-input libtzplatform-config")
 
 IF (with_wayland)
     pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
@@ -74,4 +74,3 @@ ENDIF (with_wayland)
 INSTALL(TARGETS syspopup DESTINATION ${LIB_INSTALL_DIR} COMPONENT RuntimeLibraries)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../include/syspopup.h DESTINATION include)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
-
