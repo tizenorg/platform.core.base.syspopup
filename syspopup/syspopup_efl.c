@@ -33,6 +33,7 @@
 #include <Ecore_X.h>
 #endif
 
+#ifndef WAYLAND
 static Eina_Bool __x_keypress_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
@@ -45,6 +46,7 @@ static Eina_Bool __x_keypress_cb(void *data, int type, void *event)
 
 	return ECORE_CALLBACK_RENEW;
 }
+#endif
 
 #ifdef ROTATE_USING_X_CLIENT
 static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
@@ -145,6 +147,9 @@ API int syspopup_create(bundle *b, syspopup_handler *handler,
 
 API int syspopup_reset(bundle *b)
 {
+#ifndef WAYLAND
 	return X_syspopup_reset(b);
+#else
+	return 0;
+#endif
 }
-
