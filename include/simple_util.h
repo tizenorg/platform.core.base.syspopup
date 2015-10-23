@@ -35,6 +35,7 @@
 
 #define _E(fmt, arg...) LOGE(fmt,##arg)
 #define _D(fmt, arg...) LOGD(fmt,##arg)
+#define _I(fmt, arg...) LOGI(fmt,##arg)
 
 #define SYSPOPUP_DBUS_PATH "/syspopup/dbus_handler"
 #define SYSPOPUP_DBUS_SIGNAL_INTERFACE "org.tizen.syspopup.signal"

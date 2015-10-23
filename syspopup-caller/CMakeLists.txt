@@ -20,7 +20,7 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 aul dbus-glib-1 libtzplatform-config)
+pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 aul libtzplatform-config)
 
 FOREACH(flag ${spcpkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

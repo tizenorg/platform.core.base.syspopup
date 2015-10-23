@@ -29,7 +29,6 @@
 #include "syspopup_db.h"
 
 #define SYSPOPUP_DEFAULT_TIMEOUT 20	/* sec */
-#define SYSPOPUP_TERM_NOTI_PATH  "/usr/share/popup_noti_term"
 
 struct _syspopup {
 	int id;
@@ -49,7 +48,7 @@ struct _syspopup {
 
 typedef struct _syspopup syspopup;
 
-syspopup *_syspopup_get_head();
+syspopup *_syspopup_get_head(void);
 int _syspopup_add_new(syspopup *pinfo);
 syspopup *_syspopup_find(const char *name);
 syspopup *_syspopup_find_by_id(int id);
