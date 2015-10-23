@@ -31,16 +31,16 @@ extern "C" {
 #endif
 
 /**
- * @file        syspopup_caller.h 
+ * @file        syspopup_caller.h
  * @brief       Library to launch/destroy System Popup Application
  *
  * Patched by   Knhoon Baik <knhoon.baik@samsung.com>
- * Patched by   Noha Park <noha.park@samsung.com> 
+ * Patched by   Noha Park <noha.park@samsung.com>
  */
 
 /**
  * @defgroup syspopup_caller    Helper Library to launch/destroy system popup application
- * @ingroup syspopup 
+ * @ingroup syspopup
  * @brief                       Helper Library to launch/destroy system popup application
  */
 
@@ -57,7 +57,7 @@ extern "C" {
  *              And then, launch found application package
  *
  * @param[in]   popup_name      system popup application name to launch (not package name)
- * @param[in]   b               extra bundle(arguement) to toss the popup application 
+ * @param[in]   b               extra bundle(arguement) to toss the popup application
  * @return      0 if success, negative value(<0) if fail
  * @retval      0               - success
  * @retval      -1              - generic error
@@ -98,4 +98,3 @@ int syspopup_destroy_all();
 #endif
 
 #endif
-

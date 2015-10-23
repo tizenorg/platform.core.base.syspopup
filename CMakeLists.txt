@@ -23,7 +23,7 @@ IF (with_wayland)
     ADD_DEFINITIONS("-DWAYLAND")
 ENDIF(with_wayland)
 
-pkg_check_modules(libpkgs REQUIRED aul dlog bundle sqlite3 glib-2.0 dbus-glib-1 libtzplatform-config)
+pkg_check_modules(libpkgs REQUIRED aul dlog bundle sqlite3 glib-2.0 gio-2.0 libtzplatform-config)
 
 FOREACH(flag ${libpkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -39,7 +39,7 @@ SET(CMAKE_C_FLAGS_RELEASE "-O2")
 
 SET(CMAKE_SKIP_BUILD_RPATH true)
 
-# Get uname value to set 'TARGET' definition 
+# Get uname value to set 'TARGET' definition
 # TODO: Is this needed?
 FIND_PROGRAM(UNAME NAMES uname)
 EXEC_PROGRAM("${UNAME}" ARGS "-m" OUTPUT_VARIABLE "ARCH")

@@ -25,7 +25,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <glib.h>
-#include <dbus/dbus.h>
+#include <gio/gio.h>
 #include <aul.h>
 
 #include "syspopup_core.h"
@@ -68,49 +68,51 @@ API int syspopup_launch(char *popup_name, bundle *b)
 	}
 
 	ret = aul_launch_app(info->pkgname, b);
-	if (ret < 0) {
-		_E("aul launch error - %d", ret);
-	}
+	if (ret < 0)
+		_E("aul launch error: %d", ret);
 
-	if (is_bundle == 1) {
+	if (is_bundle == 1)
 		bundle_free(b);
-	}
 
 	_syspopup_info_free(info);
 
 	return ret;
 }
 
-API int syspopup_destroy_all()
+API int syspopup_destroy_all(void)
 {
-	DBusMessage *message;
-	DBusError error;
-	DBusConnection *bus = NULL;
+	GDBusConnection *conn = NULL;
+	GError *err = NULL;
+	int ret = 0;
 
-	dbus_error_init(&error);
-	bus = dbus_bus_get_private(DBUS_BUS_SYSTEM, &error);
-	if (bus == NULL) {
-		_E("Failed to connect to the D-BUS daemon: %s", error.message);
-		dbus_error_free(&error);
+#if !(GLIB_CHECK_VERSION(2, 36, 0))
+	g_type_init();
+#endif
+
+	conn = g_bus_get_sync(G_BUS_TYPE_SYSTEM, NULL, &err);
+	if (err) {
+		_E("gdbus connection error: %s", err->message);
+		g_error_free(err);
 		return -1;
 	}
 
-	message = dbus_message_new_signal(SYSPOPUP_DBUS_PATH,
-					  SYSPOPUP_DBUS_SIGNAL_INTERFACE,
-					  SYSPOPUP_DBUS_SP_TERM_SIGNAL);
-
-	if (dbus_connection_send(bus, message, NULL) == FALSE) {
-		_E("dbus send error");
-		return -1;
+	if (g_dbus_connection_emit_signal(conn,
+					NULL,
+					SYSPOPUP_DBUS_PATH,
+					SYSPOPUP_DBUS_SIGNAL_INTERFACE,
+					SYSPOPUP_DBUS_SP_TERM_SIGNAL,
+					NULL,
+					&err) == FALSE) {
+		_E("emitting the signal error: %s", err->message);
+		ret = -1;
+	} else {
+		_D("send signal done");
 	}
 
-	dbus_connection_flush(bus);
-	dbus_message_unref(message);
+	if (err)
+		g_error_free(err);
+	if (conn)
+		g_object_unref(conn);
 
-	dbus_connection_close(bus);
-
-	_D("send signal done\n");
-
-	return 0;
+	return ret;
 }
-

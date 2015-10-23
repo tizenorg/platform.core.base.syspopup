@@ -17,7 +17,8 @@ BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(dbus-glib-1)
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gio-2.0)
 %if %{with x}
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
@@ -30,7 +31,6 @@ BuildRequires:  pkgconfig(libtzplatform-config)
 
 %description
 syspopup package for popup
-
 
 %package devel
 Summary:    Syspopup development package
@@ -57,7 +57,6 @@ Requires:   %{name} = %{version}-%{release}
 
 %description caller-devel
 syspopup-caller development package for popup
-
 
 %prep
 %setup -q
