@@ -26,12 +26,63 @@
 #include <fcntl.h>
 #include <glib.h>
 #include <gio/gio.h>
-#include <aul.h>
+#include <bundle.h>
 
 #include "syspopup_core.h"
 #include "syspopup_db.h"
 #include "syspopup_api.h"
 #include "simple_util.h"
+
+static int syspopup_send_launch_request(const char *appid, bundle *b)
+{
+	GDBusConnection *conn = NULL;
+	GError *err = NULL;
+	bundle_raw *b_raw = NULL;
+	int ret = 0;
+	int len;
+
+#if !(GLIB_CHECK_VERSION(2, 36, 0))
+	g_type_init();
+#endif
+
+	conn = g_bus_get_sync(G_BUS_TYPE_SYSTEM, NULL, &err);
+	if (err) {
+		_E("gdbus connection error: %s", err->message);
+		g_error_free(err);
+		return -1;
+	}
+
+	if (bundle_encode(b, &b_raw, &len) != BUNDLE_ERROR_NONE) {
+		_E("bundle encode error");
+		ret = -1;
+		goto end;
+	}
+
+	if (g_dbus_connection_emit_signal(conn,
+					NULL,
+					AUL_SP_DBUS_PATH,
+					AUL_SP_DBUS_SIGNAL_INTERFACE,
+					AUL_SP_DBUS_LAUNCH_REQUEST_SIGNAL,
+					g_variant_new("(ss)", appid, (char *)b_raw),
+					&err) == FALSE) {
+		_E("emitting the signal error: %s", err->message);
+		ret = -1;
+		goto end;
+	}
+
+	if (g_dbus_connection_flush_sync(conn, NULL, &err) == FALSE) {
+		_E("gdbus connection flush sync failed: %s", err->message);
+		ret = -1;
+	}
+
+end:
+	if (err)
+		g_error_free(err);
+	if (conn)
+		g_object_unref(conn);
+
+	return ret;
+}
 
 API int syspopup_launch(char *popup_name, bundle *b)
 {
@@ -67,9 +118,9 @@ API int syspopup_launch(char *popup_name, bundle *b)
 		return -1;
 	}
 
-	ret = aul_launch_app(info->pkgname, b);
+	ret = syspopup_send_launch_request(info->pkgname, b);
 	if (ret < 0)
-		_E("aul launch error: %d", ret);
+		_E("syspopup launch error: %d", ret);
 
 	if (is_bundle == 1)
 		bundle_free(b);

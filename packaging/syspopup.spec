@@ -12,6 +12,7 @@ Source1001:     %{name}.manifest
 Source1002:     %{name}-devel.manifest
 Source1003:     %{name}-caller.manifest
 Source1004:     %{name}-caller-devel.manifest
+Source1005:	org.tizen.aul.syspopup.conf.in
 
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(sqlite3)
@@ -24,7 +25,6 @@ BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(ecore-x)
 %endif
-BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(libtzplatform-config)
@@ -86,6 +86,9 @@ rm -rf %{buildroot}/usr/share/syspopup/syspopup_db.sql
 
 touch %{buildroot}%{_datadir}/popup_noti_term
 
+mkdir -p %{buildroot}%{_sysconfdir}/dbus-1/system.d
+install -m 0644 %SOURCE1005 %{buildroot}%{_sysconfdir}/dbus-1/system.d/org.tizen.aul.syspopup.conf
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -123,6 +126,7 @@ touch %{buildroot}%{_datadir}/popup_noti_term
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
 /usr/share/license/%{name}-caller
+%{_sysconfdir}/dbus-1/system.d/org.tizen.aul.syspopup.conf
 
 %files caller-devel
 %manifest %{name}-caller-devel.manifest
