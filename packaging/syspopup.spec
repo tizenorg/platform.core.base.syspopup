@@ -24,7 +24,6 @@ BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(ecore-x)
 %endif
-BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(libtzplatform-config)
