@@ -41,5 +41,9 @@
 #define SYSPOPUP_DBUS_SIGNAL_INTERFACE "org.tizen.syspopup.signal"
 #define SYSPOPUP_DBUS_SP_TERM_SIGNAL	"syspopup_term"
 
+#define AUL_SP_DBUS_PATH "/Org/Tizen/Aul/Syspopup"
+#define AUL_SP_DBUS_SIGNAL_INTERFACE "org.tizen.aul.syspopup"
+#define AUL_SP_DBUS_LAUNCH_REQUEST_SIGNAL "syspopup_launch_request"
+
 #endif
 
