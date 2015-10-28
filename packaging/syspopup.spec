@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
+BuildRequires:	pkgconfig(elementary)
 %if %{with x}
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
