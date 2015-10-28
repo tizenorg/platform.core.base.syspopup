@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=@PREFIX@
+exec_prefix=@EXEC_PREFIX@
+libdir=@LIB_INSTALL_DIR@
+includedir=@INCLUDEDIR@
+
+Name: @PC_NAME@
+Description: system popup library for ui
+Version: @VERSION@
+Requires: @PC_REQUIRED@
+Libs: -L${libdir} @PC_LDFLAGS@
+Cflags: -I${includedir}

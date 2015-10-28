@@ -20,11 +20,12 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 INCLUDE(FindPkgConfig)
 
 SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 gio-2.0 evas elementary ecore ecore-input libtzplatform-config")
+SET(pc_requires "bundle elementary")
 
 IF (with_wayland)
-    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
+	pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
 ELSE (with_wayland)
-    pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} utilX ecore-x x11)
+	pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} utilX ecore-x x11)
 ENDIF (with_wayland)
 
 FOREACH(flag ${sppkgs_CFLAGS})
@@ -40,7 +41,7 @@ SET(CMAKE_C_FLAGS_RELEASE "-O2")
 
 SET(CMAKE_SKIP_BUILD_RPATH true)
 
-# Get uname value to set 'TARGET' definition 
+# Get uname value to set 'TARGET' definition
 # TODO: Is this needed?
 FIND_PROGRAM(UNAME NAMES uname)
 EXEC_PROGRAM("${UNAME}" ARGS "-m" OUTPUT_VARIABLE "ARCH")
@@ -62,13 +63,12 @@ add_library(syspopup SHARED syspopup.c syspopup_efl.c)
 target_link_libraries(syspopup syspopup_mods ${sppkgs_LDFLAGS})
 SET_TARGET_PROPERTIES(syspopup PROPERTIES SOVERSION 0.1.0)
 
+SET(PC_NAME libsyspopup)
+SET(PC_REQUIRED ${pc_requires})
+SET(PC_LDFLAGS -lsyspopup)
+
 # pkgconfig file
-#CONFIGURE_FILE(syspopup.pc.in syspopup/syspopup.pc @ONLY)
-IF (with_wayland)
-    CONFIGURE_FILE(syspopup-wayland.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
-ELSE (with_wayland)
-    CONFIGURE_FILE(syspopup-x.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
-ENDIF (with_wayland)
+CONFIGURE_FILE(syspopup.pc.in ${CMAKE_CURRENT_BINARY_DIR}/syspopup.pc @ONLY)
 
 ### Install ###
 INSTALL(TARGETS syspopup DESTINATION ${LIB_INSTALL_DIR} COMPONENT RuntimeLibraries)
