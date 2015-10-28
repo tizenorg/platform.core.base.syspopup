@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <grp.h>
 #include <gio/gio.h>
+#include <bundle.h>
 #include <bundle_internal.h>
 
 /* For multi-user support */
@@ -43,7 +44,7 @@ static int initialized = 0;
 static int sp_id = 0;
 
 static void (*_term_handler)(void *data);
-static gboolean (*_timeout_handler)(void *data);
+static gboolean (*_timeout_handler)(gpointer data);
 
 syspopup *_syspopup_get_head(void)
 {
@@ -96,10 +97,10 @@ syspopup *_syspopup_find_by_id(int id)
 
 static void __syspopup_free(syspopup *sp)
 {
-	if (sp->name != NULL)
+	if (sp->name)
 		free(sp->name);
 
-	if (sp->dupped_bundle != NULL)
+	if (sp->dupped_bundle)
 		bundle_free(sp->dupped_bundle);
 
 	free(sp);
@@ -110,9 +111,11 @@ void _syspopup_del(int id)
 	syspopup *tmp;
 	syspopup *target;
 
-	target = _syspopup_find_by_id(id);
+	if (syspopup_head == NULL)
+		return;
 
-	if (syspopup_head == NULL || target == NULL)
+	target = _syspopup_find_by_id(id);
+	if (target == NULL)
 		return;
 
 	if (syspopup_head == target) {
@@ -151,7 +154,7 @@ static void __syspopup_dbus_signal_filter(GDBusConnection *conn,
 }
 
 int _syspopup_init(void (*term_handler)(void *),
-		gboolean (*timeout_handler)(void *))
+		gboolean (*timeout_handler)(gpointer))
 {
 	GDBusConnection *conn = NULL;
 	GError *err = NULL;
@@ -218,8 +221,9 @@ int _syspopup_reset_timeout(syspopup *sp, syspopup_info_t *info)
 
 	if (info->timeout > 0) {
 		sp->timeout_id = g_timeout_add_seconds(info->timeout,
-					_timeout_handler, (void *)sp->id);
-		_D("add timeout - timeout : id=%d,timeout=%d(sec)",
+					_timeout_handler,
+					(gpointer)((intptr_t)sp->id));
+		_D("add timeout: id = %d, sec = %d",
 					sp->id, info->timeout);
 	}
 
@@ -261,10 +265,14 @@ const char *_syspopup_get_name_from_bundle(bundle *b)
 
 int _syspopup_set_name_to_bundle(bundle *b, char *popup_name)
 {
+	int ret;
+
 	if (b == NULL || popup_name == NULL)
 		return -1;
 
-	bundle_add(b, SYSPOPUP_NAME, popup_name);
+	ret = bundle_add(b, SYSPOPUP_NAME, popup_name);
+	if (ret != BUNDLE_ERROR_NONE)
+		return -1;
 
 	return 0;
 }

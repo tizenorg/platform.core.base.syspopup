@@ -45,5 +45,11 @@
 #define AUL_SP_DBUS_SIGNAL_INTERFACE "org.tizen.aul.syspopup"
 #define AUL_SP_DBUS_LAUNCH_REQUEST_SIGNAL "syspopup_launch_request"
 
+#define WIN_PROP_NAME "SYSTEM_POPUP"
+
+#ifndef KEY_END
+#define KEY_END "XF86Stop"
+#endif
+
 #endif
 
