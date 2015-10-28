@@ -54,8 +54,8 @@ syspopup *_syspopup_find(const char *name);
 syspopup *_syspopup_find_by_id(int id);
 void _syspopup_del(int id);
 
-int _syspopup_init(void (*term_handler) (void *),
-		   gboolean(*timeout_handler) (void *));
+int _syspopup_init(void (*term_handler)(void *),
+		   gboolean (*timeout_handler)(gpointer));
 int _syspopup_reset_timeout(syspopup *sp, syspopup_info_t *info);
 int _syspopup_set_term_type(syspopup *sp, syspopup_info_t *info);
 int _syspopup_set_endkey_type(syspopup *sp, syspopup_info_t *info);

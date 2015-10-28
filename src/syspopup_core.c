@@ -43,7 +43,7 @@ static int initialized = 0;
 static int sp_id = 0;
 
 static void (*_term_handler)(void *data);
-static gboolean (*_timeout_handler)(void *data);
+static gboolean (*_timeout_handler)(gpointer data);
 
 syspopup *_syspopup_get_head(void)
 {
@@ -151,7 +151,7 @@ static void __syspopup_dbus_signal_filter(GDBusConnection *conn,
 }
 
 int _syspopup_init(void (*term_handler)(void *),
-		gboolean (*timeout_handler)(void *))
+		gboolean (*timeout_handler)(gpointer))
 {
 	GDBusConnection *conn = NULL;
 	GError *err = NULL;
@@ -218,7 +218,7 @@ int _syspopup_reset_timeout(syspopup *sp, syspopup_info_t *info)
 
 	if (info->timeout > 0) {
 		sp->timeout_id = g_timeout_add_seconds(info->timeout,
-					_timeout_handler, (void *)sp->id);
+					_timeout_handler, (gpointer)sp->id);
 		_D("add timeout - timeout : id=%d,timeout=%d(sec)",
 					sp->id, info->timeout);
 	}

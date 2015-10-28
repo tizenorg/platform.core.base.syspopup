@@ -20,10 +20,15 @@ BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
+%if %{with wayland}
+BuildRequires:  pkgconfig(ecore-wayland)
+BuildRequires:  pkgconfig(capi-ui-efl-util)
+%else
 %if %{with x}
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(ecore-x)
+%endif
 %endif
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(appcore-efl)
@@ -65,8 +70,12 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
 %build
 %cmake . \
-%if %{with wayland} && !%{with x}
+%if %{with wayland}
 -Dwith_wayland=TRUE \
+%else
+%if %{with x}
+-Dwith_x11=TRUE \
+%endif
 %endif
 -DEXTRA_CFLAGS=-fPIC
 
