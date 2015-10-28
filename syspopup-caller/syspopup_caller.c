@@ -111,10 +111,9 @@ API int syspopup_launch(char *popup_name, bundle *b)
 	if (_syspopup_set_name_to_bundle(b, popup_name) < 0) {
 		_E("bundle set error\n");
 		_syspopup_info_free(info);
-
-		if (is_bundle == 1) {
+		if (is_bundle == 1)
 			bundle_free(b);
-		}
+
 		return -1;
 	}
 
