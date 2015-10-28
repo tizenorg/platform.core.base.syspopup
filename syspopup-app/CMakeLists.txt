@@ -1,7 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(syspopup-app C)
 
-SET(SRCS syspopup-app.c)
+SET(SRCS src/syspopup-app.c)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 SET(VENDOR "tizen")
 SET(PACKAGE ${PROJECT_NAME})
@@ -22,7 +23,10 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/syspopup)
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(syspopup_app_pkgs REQUIRED appcore-efl libtzplatform-config)
+pkg_check_modules(syspopup_app_pkgs REQUIRED
+	capi-appfw-application
+	elementary
+	capi-system-system-settings)
 
 FOREACH(flag ${syspopup_app_pkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

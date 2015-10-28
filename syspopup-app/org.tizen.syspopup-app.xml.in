@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.syspopup-app" version="0.1.0-0" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.syspopup-app" api-version="3.0" version="0.1.0-0" install-location="internal-only">
 	<label>syspopup-app</label>
 	<author email="sewook7.park@samsung.com" href="www.samsung.com">Sewook Park</author>
 	<description>syspopup-app</description>

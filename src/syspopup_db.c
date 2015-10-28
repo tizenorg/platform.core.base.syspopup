@@ -58,7 +58,7 @@ static int __init(void)
 				rc, sqlite3_extended_errcode(db));
 		return -1;
 	} else {
-		_D("db open sucess");
+		_D("db open success");
 	}
 
 	return 0;

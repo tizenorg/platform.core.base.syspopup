@@ -20,7 +20,9 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 aul libtzplatform-config)
+SET(pc_requires "bundle")
+
+pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 libtzplatform-config)
 
 FOREACH(flag ${spcpkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -36,7 +38,7 @@ SET(CMAKE_C_FLAGS_RELEASE "-O2")
 
 SET(CMAKE_SKIP_BUILD_RPATH true)
 
-# Get uname value to set 'TARGET' definition 
+# Get uname value to set 'TARGET' definition
 # TODO: Is this needed?
 FIND_PROGRAM(UNAME NAMES uname)
 EXEC_PROGRAM("${UNAME}" ARGS "-m" OUTPUT_VARIABLE "ARCH")
@@ -55,6 +57,10 @@ SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed")
 add_library(syspopup_caller SHARED syspopup_caller.c)
 target_link_libraries(syspopup_caller syspopup_mods ${spcpkgs_LDFLAGS})
 SET_TARGET_PROPERTIES(syspopup_caller PROPERTIES SOVERSION 0.1.0)
+
+SET(PC_NAME libsyspopup_caller)
+SET(PC_REQUIRES ${pc_requires})
+SET(PC_LDFLAG -lsyspopup_caller)
 
 # pkgconfig file
 #CONFIGURE_FILE(syspopup-caller.pc.in syspopup-caller/syspopup-caller.pc @ONLY)

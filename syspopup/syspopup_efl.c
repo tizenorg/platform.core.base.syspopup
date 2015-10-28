@@ -20,137 +20,103 @@
  *
  */
 
+#include <Evas.h>
+#include <Ecore.h>
+#include <Ecore_Input.h>
 
 #include "syspopup_core.h"
 #include "syspopup.h"
 #include "syspopup_api.h"
 #include "simple_util.h"
-#include <Evas.h>
-#include <Ecore.h>
-#include <Ecore_Input.h>
-
-#ifndef WAYLAND
-#include <Ecore_X.h>
-#include <utilX.h>
+#if defined(X11)
+#include "syspopup_x.h"
+#elif defined(WAYLAND)
+#include "syspopup_wayland.h"
 #endif
 
-#ifndef WAYLAND
-static Eina_Bool __x_keypress_cb(void *data, int type, void *event)
+static Eina_Bool __keydown_cb(void *data, int type, void *event)
 {
 	int id = (int)data;
 	Ecore_Event_Key *ev = event;
 
 	if (ev == NULL)
-		return 0;
+		return ECORE_CALLBACK_DONE;
 
-	X_syspopup_process_keypress(id, ev->keyname);
-
-	return ECORE_CALLBACK_RENEW;
-}
+#if defined(X11)
+	x_syspopup_process_keypress(id, ev->keyname);
+#elif defined(WAYLAND)
+	wl_syspopup_process_keypress(id, ev->keyname);
 #endif
 
-#ifdef ROTATE_USING_X_CLIENT
-static Eina_Bool __x_rotate_cb(void *data, int type, void *event)
-{
-	int id = (int)data;
-
-#ifndef WAYLAND
-	Ecore_X_Event_Client_Message *ev = event;
-
-	if (!event)
-		return ECORE_CALLBACK_RENEW;
-
-	if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE)
-		X_syspopup_process_rotate(id);
-#endif
-
-	return ECORE_CALLBACK_RENEW;
+	return ECORE_CALLBACK_DONE;
 }
 
-#ifndef WAYLAND
-static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
-{
-	int rotation;
-
-	rotation = X_syspopup_rotation_get(dpy, win);
-
-	if (rotation == -1) {
-		rotation = 0;
-	}
-
-	if (rotation >= 0)
-		elm_win_rotation_with_resize_set(sp->win, rotation);
-
-	return 0;
-}
-#endif
-#else
-#ifndef WAYLAND
-static int __efl_rotate(Display *dpy, Window win, syspopup *sp)
+static int __efl_rotate_cb(void *d, void *w, void *s)
 {
 	return 0;
 }
-#endif /* WAYLAND */
-#endif /* ROTATE_USING_X_CLIENT */
 
-API int syspopup_create(bundle *b, syspopup_handler *handler,
-			Evas_Object *parent, void *user_data)
+int syspopup_efl_create(const char *popup_name, bundle *b, Evas_Object *parent,
+			syspopup_handler *handler, void *user_data)
 {
-#ifndef WAYLAND
-	Ecore_X_Window xwin;
-	Display *dpy;
-	const char *popup_name;
-	syspopup *sp = NULL;
-	int id;
-	XWindowAttributes attr;
-	int is_unviewable = 0;
+	syspopup *sp;
+	syspopup_info_t *info;
 
-	popup_name = _syspopup_get_name_from_bundle(b);
-	if (popup_name == NULL || handler == NULL) {
-		_E("popup_name or handler is NULL");
+	info = _syspopup_info_get(popup_name);
+	if (info == NULL) {
+		_E("Failed to get syspopup info: %s", popup_name);
 		return -1;
 	}
 
-	if (parent == NULL) {
-		_E("parent window is NULL");
+	sp = (syspopup *)malloc(sizeof(syspopup));
+	if (sp == NULL) {
+		_syspopup_info_free(info);
 		return -1;
 	}
 
-	sp = _syspopup_find(popup_name);
-	if (sp) {
-		_E("already exist - syspopup %s", popup_name);
+	sp->name = strdup(info->name);
+	sp->def_term_fn = handler->def_term_fn;
+	sp->def_timeout_fn = handler->def_timeout_fn;
+	sp->user_data = user_data;
+	sp->win = (void *)parent;
+	sp->timeout_id = 0;
+	sp->dupped_bundle = bundle_dup(b);
+	sp->rotate_cb = __efl_rotate_cb;
+
+	_syspopup_add_new(sp);
+	_syspopup_set_term_type(sp, info);
+	_syspopup_set_endkey_type(sp, info);
+
+#if defined(X11)
+	sp->internal_data = (void *)elm_win_xwindow_get(parent);
+	if (x_syspopup_init(sp, info) < 0) {
+		_syspopup_info_free(info);
+		_syspopup_del(sp->id);
 		return -1;
-	} else {
-		xwin = elm_win_xwindow_get(parent);
-		dpy = ecore_x_display_get();
-
-		id = X_make_syspopup(b, dpy, xwin, parent, __efl_rotate,
-				     handler, user_data);
-		if (id < 0) {
-			_E("fail to make X syspopup");
-			return -1;
-		}
-
-		/* X_syspopup_core should process 2 events */
-		/* First, rotate event */
-		/* Second, keypress event */
-		utilx_grab_key(dpy, xwin, KEY_BACK, TOP_POSITION_GRAB);
-		ecore_event_handler_add(ECORE_EVENT_KEY_UP, __x_keypress_cb, (void *)id);
-
-#ifdef ROTATE_USING_X_CLIENT
-		ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,__x_rotate_cb, (void *)id);
-#endif
+	}
+#elif defined(WAYLAND)
+	sp->internal_data = (void *)elm_win_wl_window_get(parent);
+	if (wl_syspopup_init(sp, info) < 0) {
+		_syspopup_info_free(info);
+		_syspopup_del(sp->id);
+		return -1;
 	}
 #endif
 
-	return 0;
+	_syspopup_reset_timeout(sp, info);
+	ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+				__keydown_cb, (const void *)sp->id);
+
+	_syspopup_info_free(info);
+
+	return sp->id;
 }
 
-API int syspopup_reset(bundle *b)
+int syspopup_efl_reset(bundle *b)
 {
-#ifndef WAYLAND
-	return X_syspopup_reset(b);
-#else
-	return 0;
+#if defined(X11)
+	return x_syspopup_reset(b);
+#elif defined(WAYLAND)
+	return wl_syspopup_reset(b);
 #endif
 }
