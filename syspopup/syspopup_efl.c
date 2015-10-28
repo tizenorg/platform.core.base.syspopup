@@ -31,6 +31,7 @@
 
 #ifndef WAYLAND
 #include <Ecore_X.h>
+#include <utilX.h>
 #endif
 
 #ifndef WAYLAND

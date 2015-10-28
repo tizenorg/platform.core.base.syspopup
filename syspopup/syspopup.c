@@ -30,6 +30,7 @@
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <Ecore_X.h>
+#include <utilX.h>
 #endif
 
 #define WIN_PROP_NAME "SYSTEM_POPUP"
