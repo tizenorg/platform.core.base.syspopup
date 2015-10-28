@@ -75,6 +75,8 @@ static int syspopup_send_launch_request(const char *appid, bundle *b)
 		ret = -1;
 	}
 
+	_E("syspopup send launch request: %s", appid);
+
 end:
 	if (err)
 		g_error_free(err);

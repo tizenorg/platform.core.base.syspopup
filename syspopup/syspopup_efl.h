@@ -20,36 +20,15 @@
  *
  */
 
+#ifndef __SYSPOPUP_EFL_H__
+#define __SYSPOPUP_EFL_H__
 
-#ifndef __SIMPLE_UTIL__
-#define __SIMPLE_UTIL__
+#include <bundle.h>
 
-#include <unistd.h>
-#include <ctype.h>
-#include <dlog.h>
+#include "syspopup.h"
 
-#undef LOG_TAG
-#define LOG_TAG "SYSPOPUP"
+int syspopup_efl_create(const char *popup_name, bundle *b, Evas_Object *parent,
+		syspopup_handler *handler, void *user_data);
+int syspopup_efl_reset(bundle *b);
 
-#define MAX_LOCAL_BUFSZ 128
-
-#define _E(fmt, arg...) LOGE(fmt,##arg)
-#define _D(fmt, arg...) LOGD(fmt,##arg)
-#define _I(fmt, arg...) LOGI(fmt,##arg)
-
-#define SYSPOPUP_DBUS_PATH "/syspopup/dbus_handler"
-#define SYSPOPUP_DBUS_SIGNAL_INTERFACE "org.tizen.syspopup.signal"
-#define SYSPOPUP_DBUS_SP_TERM_SIGNAL	"syspopup_term"
-
-#define AUL_SP_DBUS_PATH "/Org/Tizen/Aul/Syspopup"
-#define AUL_SP_DBUS_SIGNAL_INTERFACE "org.tizen.aul.syspopup"
-#define AUL_SP_DBUS_LAUNCH_REQUEST_SIGNAL "syspopup_launch_request"
-
-#define WIN_PROP_NAME "SYSTEM_POPUP"
-
-#ifndef KEY_END
-#define KEY_END "XF86Stop"
-#endif
-
-#endif
-
+#endif /* __SYSPOPUP_EFL_H__ */
