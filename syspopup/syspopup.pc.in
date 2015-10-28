@@ -5,9 +5,9 @@ exec_prefix=@EXEC_PREFIX@
 libdir=@LIB_INSTALL_DIR@
 includedir=@INCLUDEDIR@
 
-Name: libsyspopup
-Description: system popup library for ui 
+Name: @PC_NAME@
+Description: system popup library for ui
 Version: @VERSION@
-Requires: dlog bundle sqlite3 glib-2.0 elementary utilX ecore-x dbus-glib-1
-Libs: -L${libdir} -lsyspopup
+Requires: @PC_REQUIRED@
+Libs: -L${libdir} @PC_LDFLAGS@
 Cflags: -I${includedir}
