@@ -22,11 +22,12 @@ INCLUDE(FindPkgConfig)
 SET(APPSVC_SPPPGS_CHECK_MODULES "dlog bundle sqlite3 glib-2.0 gio-2.0 evas elementary ecore ecore-input libtzplatform-config")
 SET(pc_requires "bundle elementary")
 
-IF (with_wayland)
-	pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES})
-ELSE (with_wayland)
+IF(with_wayland)
+	pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} ecore-wayland capi-ui-efl-util)
+ENDIF(with_wayland)
+IF(with_x11)
 	pkg_check_modules(sppkgs REQUIRED ${APPSVC_SPPPGS_CHECK_MODULES} utilX ecore-x x11)
-ENDIF (with_wayland)
+ENDIF(with_x11)
 
 FOREACH(flag ${sppkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -58,8 +59,13 @@ SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed")
 
 
 ### Build ###
+IF(with_wayland)
+	add_library(syspopup SHARED syspopup.c syspopup_efl.c syspopup_wayland.c)
+ENDIF(with_wayland)
+IF(with_x11)
+	add_library(syspopup SHARED syspopup.c syspopup_efl.c syspopup_x.c)
+ENDIF(with_x11)
 
-add_library(syspopup SHARED syspopup.c syspopup_efl.c)
 target_link_libraries(syspopup syspopup_mods ${sppkgs_LDFLAGS})
 SET_TARGET_PROPERTIES(syspopup PROPERTIES SOVERSION 0.1.0)
 
