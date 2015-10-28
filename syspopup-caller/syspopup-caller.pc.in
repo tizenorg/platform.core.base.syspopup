@@ -1,13 +1,13 @@
 # Package Information for pkg-config
 
-prefix=/usr
+prefix=@PREFIX@
 exec_prefix=@EXEC_PREFIX@
 libdir=@LIB_INSTALL_DIR@
 includedir=@INCLUDEDIR@
 
-Name: libsyspopup_caller
+Name: @PC_NAME@
 Description: system popup caller library - may be integrated in AUL
 Version: @VERSION@
-Requires: dlog bundle sqlite3 glib-2.0 aul 
-Libs: -L${libdir} -lsyspopup_caller
+Requires: @PC_REQUIRED@
+Libs: -L${libdir} @PC_LDFLAGS@
 Cflags: -I${includedir}
