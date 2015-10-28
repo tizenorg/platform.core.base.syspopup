@@ -19,9 +19,12 @@ MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 # Set required packages
 INCLUDE(FindPkgConfig)
 
-IF (with_wayland)
-    ADD_DEFINITIONS("-DWAYLAND")
+IF(with_wayland)
+	ADD_DEFINITIONS("-DWAYLAND")
 ENDIF(with_wayland)
+IF(with_x11)
+	ADD_DEFINITIONS("-DX11")
+ENDIF(with_x11)
 
 pkg_check_modules(libpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 libtzplatform-config)
 
