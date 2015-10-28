@@ -23,9 +23,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <bundle.h>
 #include "syspopup_caller.h"
 
-void usage()
+static void usage(void)
 {
 	printf("[usage] sp_test launch/destroy popup_name..."
 				"(key1,val1,key2,val2,...)\n");
@@ -53,11 +54,13 @@ int main(int argc, char **argv)
 			bundle_add(b, argv[i], argv[i + 1]);
 		ret = syspopup_launch(argv[2], b);
 		bundle_free(b);
-		if(ret < 0) return -1;
+		if (ret < 0)
+			return -1;
 
 	} else if (strcmp(argv[1], "destroy") == 0) {
 		ret = syspopup_destroy_all();
-		if(ret < 0) return -1;
+		if (ret < 0)
+			return -1;
 	} else {
 		usage();
 	}
