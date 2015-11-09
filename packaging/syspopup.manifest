@@ -1,8 +1,9 @@
 <manifest>
         <request>
-                <domain name="_" />
+                <domain name="_"/>
         </request>
 	<assign>
-		<filesystem path="TZ_SYS_DB/.syspopup.db*" label="System" />
+		<filesystem path="TZ_SYS_DB/.syspopup.db" label="System::Shared"/>
+		<filesystem path="TZ_SYS_DB/.syspopup.db-journal" label="System::Shared"/>
 	</assign>
 </manifest>
