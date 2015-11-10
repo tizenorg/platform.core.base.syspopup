@@ -97,6 +97,40 @@ static efl_util_notification_level_e __wl_syspopup_get_notification_level(int pr
 	}
 }
 
+static Eina_Bool __wl_keydown_cb(void *data, int type, void *event)
+{
+	int id = (int)((intptr_t)data);
+	Ecore_Event_Key *ev = event;
+	syspopup *sp = NULL;
+
+	if (ev == NULL || ev->keyname == NULL)
+		return ECORE_CALLBACK_DONE;
+
+	_D("key press - %s", ev->keyname);
+
+	if (strcmp(ev->keyname, KEY_END) != 0)
+		return ECORE_CALLBACK_DONE;
+
+	sp = _syspopup_find_by_id(id);
+	if (sp == NULL)
+		return ECORE_CALLBACK_DONE;
+
+	_D("find key down - %s", sp->name);
+	if (sp->endkey_act == SYSPOPUP_KEYEND_TERM) {
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+	} else if (sp->endkey_act == SYSPOPUP_KEYEND_HIDE) {
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+
+		ecore_wl_window_hide((Ecore_Wl_Window *)sp->internal_data);
+	} else {
+		_E("no find key down");
+	}
+
+	return ECORE_CALLBACK_DONE;
+}
+
 int wl_syspopup_init(syspopup *sp, syspopup_info_t *info)
 {
 	Ecore_Wl_Window *wl_win;
@@ -113,6 +147,11 @@ int wl_syspopup_init(syspopup *sp, syspopup_info_t *info)
 	efl_util_set_notification_window_level(sp->win, level);
 	if (info->focus)
 		ecore_wl_window_focus_skip_set(wl_win, EINA_TRUE);
+
+	ecore_wl_window_keygrab_set(wl_win, KEY_END,
+			0, 0, 0, ECORE_WL_WINDOW_KEYGRAB_TOPMOST);
+	ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __wl_keydown_cb,
+			(const void *)((intptr_t)sp->id));
 
 	__wl_rotation_set(sp);
 
@@ -156,38 +195,6 @@ int wl_syspopup_reset(bundle *b)
 	__wl_rotation_set(sp);
 
 	_syspopup_info_free(info);
-
-	return 0;
-}
-
-int wl_syspopup_process_keypress(int id, const char *keyname)
-{
-	syspopup *sp;
-
-	if (keyname == NULL)
-		return 0;
-
-	_D("key press - %s", keyname);
-
-	if (strcmp(keyname, KEY_END) != 0)
-		return 0;
-
-	sp = _syspopup_find_by_id(id);
-	if (sp == NULL)
-		return 0;
-
-	_D("find key down - %s", sp->name);
-	if (sp->endkey_act == SYSPOPUP_KEYEND_TERM) {
-		if (sp->def_term_fn)
-			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
-	} else if (sp->endkey_act == SYSPOPUP_KEYEND_HIDE) {
-		if (sp->def_term_fn)
-			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
-
-		ecore_wl_window_hide((Ecore_Wl_Window *)sp->internal_data);
-	} else {
-		_E("no find key down");
-	}
 
 	return 0;
 }

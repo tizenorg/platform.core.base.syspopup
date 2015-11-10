@@ -247,6 +247,52 @@ static void __x_rotation_set(Display *dpy, Window win, syspopup *sp)
 }
 #endif
 
+static Eina_Bool __x_keydown_cb(void *data, int type, void *event)
+{
+	int id = (int)((intptr_t)data);
+	Ecore_Event_Key *ev = event;
+	Display *dpy;
+	Window win;
+	syspopup *sp = NULL;
+
+	if (ev == NULL || ev->keyname == NULL)
+		return ECORE_CALLBACK_DONE;
+
+	_D("key press - %s", ev->keyname);
+
+	if (strcmp(ev->keyname, KEY_END) != 0)
+		return ECORE_CALLBACK_DONE;
+
+	sp = _syspopup_find_by_id(id);
+	if (sp == NULL)
+		return ECORE_CALLBACK_DONE;
+
+	dpy = XOpenDisplay(NULL);
+
+	_D("find key down: %s", sp->name);
+	if (sp->endkey_act == SYSPOPUP_KEYEND_TERM) {
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle,
+					sp->user_data);
+
+		win = (Window)sp->internal_data;
+		XKillClient(dpy, win);
+	} else if (sp->endkey_act == SYSPOPUP_KEYEND_HIDE) {
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle,
+					sp->user_data);
+
+		win = (Window)sp->internal_data;
+		XUnmapWindow(dpy, win);
+	} else {
+		_E("no find key down");
+	}
+
+	XCloseDisplay(dpy);
+
+	return ECORE_CALLBACK_DONE;
+}
+
 int x_syspopup_init(syspopup *sp, syspopup_info_t *info)
 {
 	Ecore_X_Window xwin;
@@ -276,9 +322,12 @@ int x_syspopup_init(syspopup *sp, syspopup_info_t *info)
 	if (is_unviewable)
 		XMapWindow(dpy, xwin);
 
+	utilx_grab_key(dpy, xwin, KEY_END, TOP_POSITION_GRAB);
+	ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __x_keydown_cb,
+			(const void *)((intptr_t)sp->id));
 #ifdef ROTATE_USING_X_CLIENT
 	ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, __x_rotate_cb,
-					(const void *)((intptr_t)sp->id));
+			(const void *)((intptr_t)sp->id));
 #endif
 
 	return 0;
@@ -331,50 +380,6 @@ int x_syspopup_reset(bundle *b)
 	} while (0);
 
 	_syspopup_info_free(info);
-
-	return 0;
-}
-
-int x_syspopup_process_keypress(int id, const char *keyname)
-{
-	Display *dpy;
-	Window win;
-	syspopup *sp = NULL;
-
-	if (keyname == NULL)
-		return 0;
-
-	_D("key press - %s", keyname);
-
-	if (strcmp(keyname, KEY_END) != 0)
-		return 0;
-
-	sp = _syspopup_find_by_id(id);
-	if (sp == NULL)
-		return 0;
-
-	dpy = XOpenDisplay(NULL);
-
-	_D("find key down: %s", sp->name);
-	if (sp->endkey_act == SYSPOPUP_KEYEND_TERM) {
-		if (sp->def_term_fn)
-			sp->def_term_fn(sp->dupped_bundle,
-					sp->user_data);
-
-		win = (Window)sp->internal_data;
-		XKillClient(dpy, win);
-	} else if (sp->endkey_act == SYSPOPUP_KEYEND_HIDE) {
-		if (sp->def_term_fn)
-			sp->def_term_fn(sp->dupped_bundle,
-					sp->user_data);
-
-		win = (Window)sp->internal_data;
-		XUnmapWindow(dpy, win);
-	} else {
-		_E("no find key down");
-	}
-
-	XCloseDisplay(dpy);
 
 	return 0;
 }
