@@ -27,6 +27,5 @@
 
 int wl_syspopup_init(syspopup *sp, syspopup_info_t *info);
 int wl_syspopup_reset(bundle *b);
-int wl_syspopup_process_keypress(int id, const char *keyname);
 
 #endif /* __SYSPOPUP_WAYLAND_H__ */

@@ -27,6 +27,5 @@
 
 int x_syspopup_init(syspopup *sp, syspopup_info_t *info);
 int x_syspopup_reset(bundle *b);
-int x_syspopup_process_keypress(int id, const char *keyname);
 
 #endif /* __SYSPOPUP_X_H__ */

@@ -34,23 +34,6 @@
 #include "syspopup_wayland.h"
 #endif
 
-static Eina_Bool __keydown_cb(void *data, int type, void *event)
-{
-	int id = (int)((intptr_t)data);
-	Ecore_Event_Key *ev = event;
-
-	if (ev == NULL)
-		return ECORE_CALLBACK_DONE;
-
-#if defined(X11)
-	x_syspopup_process_keypress(id, ev->keyname);
-#elif defined(WAYLAND)
-	wl_syspopup_process_keypress(id, ev->keyname);
-#endif
-
-	return ECORE_CALLBACK_DONE;
-}
-
 static int __efl_rotate_cb(void *d, void *w, void *s)
 {
 	return 0;
@@ -104,9 +87,6 @@ int syspopup_efl_create(const char *popup_name, bundle *b, Evas_Object *parent,
 #endif
 
 	_syspopup_reset_timeout(sp, info);
-	ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __keydown_cb,
-					(const void *)((intptr_t)sp->id));
-
 	_syspopup_info_free(info);
 
 	return sp->id;
