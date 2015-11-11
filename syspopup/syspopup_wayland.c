@@ -25,32 +25,28 @@
 #include "syspopup_wayland.h"
 #include "simple_util.h"
 
-static void __wl_syspopup_term_handler(void *data)
+static void __wl_syspopup_term_handler(gpointer data, gpointer user_data)
 {
-	syspopup *tmp;
+	syspopup *sp = data;
 
-	tmp = _syspopup_get_head();
-	while (tmp) {
-		_D("term action %d - %s", tmp->term_act, tmp->name);
+	if (sp == NULL)
+		return;
 
-		switch (tmp->term_act) {
-		case SYSPOPUP_TERM:
-			if (tmp->def_term_fn)
-				tmp->def_term_fn(tmp->dupped_bundle,
-						 tmp->user_data);
-			break;
-		case SYSPOPUP_HIDE:
-			if (tmp->def_term_fn)
-				tmp->def_term_fn(tmp->dupped_bundle,
-						tmp->user_data);
+	_D("term action %d - %s", sp->term_act, sp->name);
 
-			ecore_wl_window_hide((Ecore_Wl_Window *)tmp->internal_data);
-			break;
-		default:
-			_D("term action IGNORED: %s", tmp->name);
-		}
-
-		tmp = tmp->next;
+	switch (sp->term_act) {
+	case SYSPOPUP_TERM:
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+		break;
+	case SYSPOPUP_HIDE:
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+		ecore_wl_window_hide((Ecore_Wl_Window *)sp->internal_data);
+		break;
+	default:
+		_D("term action IGNORED: %s", sp->name);
+		break;
 	}
 }
 

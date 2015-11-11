@@ -38,18 +38,12 @@
 
 #define SYSPOPUP_NAME "_INTERNAL_SYSPOPUP_NAME_"
 
-static syspopup *syspopup_head = NULL;
-
+static GList *syspopup_list = NULL;
 static int initialized = 0;
 static int sp_id = 0;
 
-static void (*_term_handler)(void *data);
+static void (*_term_handler)(gpointer data, gpointer user_data);
 static gboolean (*_timeout_handler)(gpointer data);
-
-syspopup *_syspopup_get_head(void)
-{
-	return syspopup_head;
-}
 
 int _syspopup_add_new(syspopup *sp)
 {
@@ -57,24 +51,26 @@ int _syspopup_add_new(syspopup *sp)
 		return -1;
 
 	sp->id = sp_id++;
-	sp->next = syspopup_head;
-	syspopup_head = sp;
+	syspopup_list = g_list_append(syspopup_list, sp);
 
 	return 0;
 }
 
 syspopup *_syspopup_find(const char *name)
 {
-	syspopup *tmp;
+	GList *list;
+	syspopup *sp;
 
-	tmp = syspopup_head;
-	while (tmp) {
-		if (tmp->name) {
-			if (strcmp(tmp->name, name) == 0)
-				return tmp;
-		}
+	if (syspopup_list == NULL)
+		return NULL;
 
-		tmp = tmp->next;
+	list = g_list_first(syspopup_list);
+	while (list) {
+		sp = list->data;
+		if (sp->name && strcmp(sp->name, name) == 0)
+			return sp;
+
+		list = list->next;
 	}
 
 	return NULL;
@@ -82,14 +78,19 @@ syspopup *_syspopup_find(const char *name)
 
 syspopup *_syspopup_find_by_id(int id)
 {
-	syspopup *tmp;
+	GList *list;
+	syspopup *sp;
 
-	tmp = syspopup_head;
-	while (tmp) {
-		if (tmp->id == id)
-			return tmp;
+	if (syspopup_list == NULL)
+		return NULL;
 
-		tmp = tmp->next;
+	list = g_list_first(syspopup_list);
+	while (list) {
+		sp = list->data;
+		if (sp->id == id)
+			return sp;
+
+		list = list->next;
 	}
 
 	return NULL;
@@ -108,31 +109,22 @@ static void __syspopup_free(syspopup *sp)
 
 void _syspopup_del(int id)
 {
-	syspopup *tmp;
-	syspopup *target;
+	GList *list;
+	syspopup *sp;
 
-	if (syspopup_head == NULL)
+	if (syspopup_list == NULL)
 		return;
 
-	target = _syspopup_find_by_id(id);
-	if (target == NULL)
-		return;
-
-	if (syspopup_head == target) {
-		syspopup_head = target->next;
-		__syspopup_free(target);
-		return;
-	}
-
-	tmp = syspopup_head;
-	while (tmp) {
-		if (tmp->next == target) {
-			tmp->next = target->next;
-			__syspopup_free(target);
+	list = g_list_first(syspopup_list);
+	while (list) {
+		sp = list->data;
+		if (sp->id == id) {
+			syspopup_list = g_list_remove(syspopup_list, sp);
+			__syspopup_free(sp);
 			return;
 		}
 
-		tmp = tmp->next;
+		list = list->next;
 	}
 }
 
@@ -147,14 +139,14 @@ static void __syspopup_dbus_signal_filter(GDBusConnection *conn,
 	if (signal_name
 		&& strcmp(signal_name, SYSPOPUP_DBUS_SP_TERM_SIGNAL) == 0) {
 		if (_term_handler)
-			_term_handler(NULL);
+			g_list_foreach(syspopup_list, _term_handler, NULL);
 
 		_D("term handler has been called");
 	}
 }
 
-int _syspopup_init(void (*term_handler)(void *),
-		gboolean (*timeout_handler)(gpointer))
+int _syspopup_init(void (*term_handler)(gpointer, gpointer),
+			gboolean (*timeout_handler)(gpointer))
 {
 	GDBusConnection *conn = NULL;
 	GError *err = NULL;

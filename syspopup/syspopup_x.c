@@ -28,40 +28,33 @@
 
 static void __x_rotation_set(Display *dpy, Window win, syspopup *sp);
 
-static void __x_syspopup_term_handler(void *data)
+static void __x_syspopup_term_handler(gpointer data, gpointer user_data)
 {
-	syspopup *tmp;
+	syspopup *sp = data;
 	Display *dpy;
 	Window win;
 
+	if (sp == NULL)
+		return;
+
 	dpy = XOpenDisplay(NULL);
-	tmp = _syspopup_get_head();
-	while (tmp) {
-		_D("term action %d - %s", tmp->term_act, tmp->name);
+	win = (Window)sp->internal_data;
+	_D("term action %d - %s", sp->term_act, sp->name);
 
-		switch (tmp->term_act) {
-		case SYSPOPUP_TERM:
-			win = (Window)tmp->internal_data;
-
-			if (tmp->def_term_fn)
-				tmp->def_term_fn(tmp->dupped_bundle,
-						 tmp->user_data);
-
-			XKillClient(dpy, win);
-			break;
-		case SYSPOPUP_HIDE:
-			win = (Window)tmp->internal_data;
-
-			if (tmp->def_term_fn)
-				tmp->def_term_fn(tmp->dupped_bundle,
-						 tmp->user_data);
-			XUnmapWindow(dpy, win);
-			break;
-		default:
-			_D("term action IGNORED: %s", tmp->name);
-		}
-
-		tmp = tmp->next;
+	switch (sp->term_act) {
+	case SYSPOPUP_TERM:
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+		XKillClient(dpy, win);
+		break;
+	case SYSPOPUP_HIDE:
+		if (sp->def_term_fn)
+			sp->def_term_fn(sp->dupped_bundle, sp->user_data);
+		XUnmapWindow(dpy, win);
+		break;
+	default:
+		_D("term action IGNORED: %s", tmp->name);
+		break;
 	}
 
 	XCloseDisplay(dpy);

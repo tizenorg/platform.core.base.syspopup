@@ -43,19 +43,17 @@ struct _syspopup {
 	void *win;
 	int (*rotate_cb) (void *, void *, void *);
 	bundle *dupped_bundle;
-	struct _syspopup *next;
 };
 
 typedef struct _syspopup syspopup;
 
-syspopup *_syspopup_get_head(void);
 int _syspopup_add_new(syspopup *pinfo);
 syspopup *_syspopup_find(const char *name);
 syspopup *_syspopup_find_by_id(int id);
 void _syspopup_del(int id);
 
-int _syspopup_init(void (*term_handler)(void *),
-		   gboolean (*timeout_handler)(gpointer));
+int _syspopup_init(void (*term_handler)(gpointer, gpointer),
+			gboolean (*timeout_handler)(gpointer));
 int _syspopup_reset_timeout(syspopup *sp, syspopup_info_t *info);
 int _syspopup_set_term_type(syspopup *sp, syspopup_info_t *info);
 int _syspopup_set_endkey_type(syspopup *sp, syspopup_info_t *info);
