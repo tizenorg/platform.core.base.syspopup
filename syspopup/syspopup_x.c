@@ -53,7 +53,7 @@ static void __x_syspopup_term_handler(gpointer data, gpointer user_data)
 		XUnmapWindow(dpy, win);
 		break;
 	default:
-		_D("term action IGNORED: %s", tmp->name);
+		_D("term action IGNORED: %s", sp->name);
 		break;
 	}
 
