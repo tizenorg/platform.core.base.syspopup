@@ -24,6 +24,7 @@
 #include <app_control_internal.h>
 #include <Elementary.h>
 #include <system_settings.h>
+#include <bundle_internal.h>
 
 #include "syspopup.h"
 #include "syspopup-app.h"

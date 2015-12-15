@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <bundle.h>
+#include <bundle_internal.h>
 #include "syspopup_caller.h"
 
 static void usage(void)

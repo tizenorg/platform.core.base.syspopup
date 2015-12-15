@@ -24,6 +24,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/syspopup)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(syspopup_app_pkgs REQUIRED
+	bundle
 	capi-appfw-application
 	elementary
 	capi-system-system-settings)
