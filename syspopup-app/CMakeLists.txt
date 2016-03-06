@@ -27,6 +27,7 @@ pkg_check_modules(syspopup_app_pkgs REQUIRED
 	bundle
 	capi-appfw-application
 	elementary
+	efl-extension
 	capi-system-system-settings)
 
 FOREACH(flag ${syspopup_app_pkgs_CFLAGS})

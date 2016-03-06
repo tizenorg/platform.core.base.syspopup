@@ -32,6 +32,7 @@ BuildRequires:  pkgconfig(ecore-x)
 %endif
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(elementary)
+BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
