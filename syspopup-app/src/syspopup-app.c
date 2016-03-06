@@ -39,46 +39,42 @@ syspopup_handler syspopup_h = {
 	.def_timeout_fn = NULL,
 };
 
-static void win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
+static void __exit_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_app_exit();
 }
 
-static Evas_Object *create_win(const char *name)
+static int create_win(appdata_s *ad, const char *name)
 {
-	Evas_Object *win;
+	if (ad == NULL)
+		return -1;
 
-	win = elm_win_add(NULL, name, ELM_WIN_DIALOG_BASIC);
-	if (win == NULL)
-		return NULL;
+	ad->win = elm_win_add(NULL, name, ELM_WIN_DIALOG_BASIC);
+	if (ad->win == NULL)
+		return -1;
 
-	elm_win_title_set(win, name);
-	elm_win_borderless_set(win, EINA_TRUE);
-	elm_win_alpha_set(win, EINA_TRUE);
+	elm_win_autodel_set(ad->win, EINA_TRUE);
+	elm_win_borderless_set(ad->win, EINA_TRUE);
+	elm_win_alpha_set(ad->win, EINA_TRUE);
 
-	evas_object_smart_callback_add(win, "delete,request",
-					win_delete_request_cb, NULL);
+	evas_object_smart_callback_add(ad->win, "delete,request", __exit_cb, ad);
 
-	return win;
+	return 0;
 }
 
 static bool app_create(void *data)
 {
+	int r;
 	appdata_s *ad = data;
 
-	ad->win = create_win(PACKAGE);
-	if (ad->win == NULL)
+	r = create_win(ad, PACKAGE);
+	if (r < 0)
 		return false;
 
 	return true;
 }
 
-static void response_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	ui_app_exit();
-}
-
-static void block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+static void __block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	appdata_s *ad = data;
 
@@ -97,6 +93,9 @@ static void set_popup_text(Evas_Object *popup, bundle *b)
 	const char *title = "Unknown Title";
 	const char *content = "Unknown Content";
 
+	if (popup == NULL)
+		return;
+
 	value = bundle_get_val(b, KEY_SYSPOPUP_TITLE);
 	if (value)
 		title = value;
@@ -112,25 +111,22 @@ static void set_popup_text(Evas_Object *popup, bundle *b)
 
 static void create_popup(appdata_s *ad, bundle *b)
 {
-	int ret;
+	if (ad->popup) {
+		set_popup_text(ad->popup, b);
+		return;
+	}
 
 	ad->popup = elm_popup_add(ad->win);
 	if (ad->popup == NULL)
 		return;
 
-	ret = syspopup_create(b, &syspopup_h, ad->win, ad);
-	if (ret < 0)
-		return;
-
-	evas_object_show(ad->win);
-
 	elm_object_style_set(ad->popup, "char_wrap_style");
 	evas_object_size_hint_weight_set(ad->popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_smart_callback_add(ad->popup, "block,clicked", block_clicked_cb, ad);
+	evas_object_smart_callback_add(ad->popup, "block,clicked", __block_clicked_cb, ad);
+	evas_object_smart_callback_add(ad->popup, "response", __exit_cb, ad);
 	set_popup_text(ad->popup, b);
-	evas_object_smart_callback_add(ad->popup, "response", response_cb, ad);
-
 	evas_object_show(ad->popup);
+	evas_object_show(ad->win);
 }
 
 static void app_control(app_control_h app_control, void *data)
@@ -144,9 +140,14 @@ static void app_control(app_control_h app_control, void *data)
 		return;
 
 	if (syspopup_has_popup(b)) {
+		create_popup(ad, b);
 		syspopup_reset(b);
 		return;
 	}
+
+	ret = syspopup_create(b, &syspopup_h, ad->win, ad);
+	if (ret < 0)
+		return;
 
 	create_popup(ad, b);
 }
@@ -158,15 +159,10 @@ static void app_terminate(void *data)
 	if (ad == NULL)
 		return;
 
-	if (ad->popup) {
+	if (ad->popup)
 		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
-
-	if (ad->win) {
+	if (ad->win)
 		evas_object_del(ad->win);
-		ad->win = NULL;
-	}
 }
 
 static void ui_app_lang_changed(app_event_info_h event_info, void *user_data)
