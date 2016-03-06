@@ -25,6 +25,7 @@
 #include <Elementary.h>
 #include <system_settings.h>
 #include <bundle_internal.h>
+#include <efl_extension.h>
 
 #include "syspopup.h"
 #include "syspopup-app.h"
@@ -73,29 +74,19 @@ static bool app_create(void *data)
 	return true;
 }
 
-static void response_cb(void *data, Evas_Object *obj, void *event_info)
+static void __exit_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_app_exit();
-}
-
-static void block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	appdata_s *ad = data;
-
-	if (ad == NULL)
-		return;
-
-	if (ad->popup) {
-		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
 }
 
 static void set_popup_text(Evas_Object *popup, bundle *b)
 {
 	const char *value;
-	const char *title = "Unknown Title";
-	const char *content = "Unknown Content";
+	const char *title = "";
+	const char *content = "";
+
+	if (popup == NULL)
+		return;
 
 	value = bundle_get_val(b, KEY_SYSPOPUP_TITLE);
 	if (value)
@@ -122,15 +113,14 @@ static void create_popup(appdata_s *ad, bundle *b)
 	if (ret < 0)
 		return;
 
-	evas_object_show(ad->win);
-
 	elm_object_style_set(ad->popup, "char_wrap_style");
 	evas_object_size_hint_weight_set(ad->popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_smart_callback_add(ad->popup, "block,clicked", block_clicked_cb, ad);
+	evas_object_smart_callback_add(ad->popup, "block,clicked", __exit_cb, ad);
+	evas_object_smart_callback_add(ad->popup, "response", __exit_cb, ad);
+	evas_object_smart_callback_add(ad->popup, EEXT_CALLBACK_BACK, __exit_cb, ad);
 	set_popup_text(ad->popup, b);
-	evas_object_smart_callback_add(ad->popup, "response", response_cb, ad);
-
 	evas_object_show(ad->popup);
+	evas_object_show(ad->win);
 }
 
 static void app_control(app_control_h app_control, void *data)
@@ -158,15 +148,10 @@ static void app_terminate(void *data)
 	if (ad == NULL)
 		return;
 
-	if (ad->popup) {
+	if (ad->popup)
 		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
-
-	if (ad->win) {
+	if (ad->win)
 		evas_object_del(ad->win);
-		ad->win = NULL;
-	}
 }
 
 static void ui_app_lang_changed(app_event_info_h event_info, void *user_data)

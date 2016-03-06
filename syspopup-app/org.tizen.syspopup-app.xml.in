@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.syspopup-app" api-version="3.0" version="0.1.0-0" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.syspopup-app" api-version="3.0" version="0.1.0" install-location="internal-only">
 	<label>syspopup-app</label>
-	<author email="sewook7.park@samsung.com" href="www.samsung.com">Sewook Park</author>
 	<description>syspopup-app</description>
-	<ui-application appid="org.tizen.syspopup-app" exec="/usr/bin/syspopup-app" nodisplay="true" multiple="false" type="capp" taskmanage="false">
+	<ui-application appid="org.tizen.syspopup-app" exec="/usr/bin/syspopup-app" nodisplay="false" multiple="false" type="capp" taskmanage="false">
 		<label>syspopup-app</label>
 	</ui-application>
 </manifest>
