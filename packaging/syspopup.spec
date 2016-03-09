@@ -79,21 +79,23 @@ cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 -Dwith_x11=TRUE \
 %endif
 %endif
+-DTZ_SYS_RO_PACKAGES=%{TZ_SYS_RO_PACKAGES} \
+-DTZ_SYS_RO_SHARE=%{TZ_SYS_RO_SHARE} \
 -DEXTRA_CFLAGS=-fPIC
 
 make %{?jobs:-j%jobs}
 
 %install
 %make_install
-mkdir -p %{buildroot}/usr/share/license
-install LICENSE %{buildroot}/usr/share/license/%{name}
-install LICENSE %{buildroot}/usr/share/license/%{name}-devel
-install LICENSE %{buildroot}/usr/share/license/%{name}-caller
-install LICENSE %{buildroot}/usr/share/license/%{name}-caller-devel
+mkdir -p %{buildroot}%{TZ_SYS_RO_SHARE}/license
+install LICENSE %{buildroot}%{TZ_SYS_RO_SHARE}/license/%{name}
+install LICENSE %{buildroot}%{TZ_SYS_RO_SHARE}/license/%{name}-devel
+install LICENSE %{buildroot}%{TZ_SYS_RO_SHARE}/license/%{name}-caller
+install LICENSE %{buildroot}%{TZ_SYS_RO_SHARE}/license/%{name}-caller-devel
 
 mkdir -p %{buildroot}%{TZ_SYS_DB}
-sqlite3 %{buildroot}%{TZ_SYS_DB}/.syspopup.db < %{buildroot}/usr/share/syspopup/syspopup_db.sql
-rm -rf %{buildroot}/usr/share/syspopup/syspopup_db.sql
+sqlite3 %{buildroot}%{TZ_SYS_DB}/.syspopup.db < %{buildroot}%{TZ_SYS_RO_SHARE}/syspopup/syspopup_db.sql
+rm -rf %{buildroot}%{TZ_SYS_RO_SHARE}/syspopup/syspopup_db.sql
 
 touch %{buildroot}%{_datadir}/popup_noti_term
 
@@ -121,7 +123,7 @@ install -m 0644 %SOURCE1005 %{buildroot}%{_sysconfdir}/dbus-1/system.d/org.tizen
 %attr(644,root,%{TZ_SYS_USER_GROUP}) %{TZ_SYS_DB}/.syspopup.db
 %attr(644,root,%{TZ_SYS_USER_GROUP}) %{TZ_SYS_DB}/.syspopup.db-journal
 
-/usr/share/license/%{name}
+%TZ_SYS_RO_SHARE/license/%{name}
 
 %files devel
 %manifest %{name}-devel.manifest
@@ -130,13 +132,13 @@ install -m 0644 %SOURCE1005 %{buildroot}%{_sysconfdir}/dbus-1/system.d/org.tizen
 %{_includedir}/syspopup.h
 %{_libdir}/libsyspopup.so
 %{_libdir}/pkgconfig/syspopup.pc
-/usr/share/license/%{name}-devel
+%TZ_SYS_RO_SHARE/license/%{name}-devel
 
 %files caller
 %manifest %{name}-caller.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libsyspopup_caller.so.0.1.0
-/usr/share/license/%{name}-caller
+%TZ_SYS_RO_SHARE/license/%{name}-caller
 %{_sysconfdir}/dbus-1/system.d/org.tizen.aul.syspopup.conf
 
 %files caller-devel
@@ -145,7 +147,7 @@ install -m 0644 %SOURCE1005 %{buildroot}%{_sysconfdir}/dbus-1/system.d/org.tizen
 %{_libdir}/libsyspopup_caller.so
 %{_includedir}/syspopup_caller.h
 %{_libdir}/pkgconfig/syspopup-caller.pc
-/usr/share/license/%{name}-caller-devel
+%TZ_SYS_RO_SHARE/license/%{name}-caller-devel
 
 
 %changelog
