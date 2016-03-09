@@ -65,7 +65,7 @@ add_library(syspopup_mods STATIC
 		)
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/SLP_SYSPOPUP_PG.h DESTINATION include)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/syspopup_db.sql DESTINATION /usr/share/syspopup/)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/syspopup_db.sql DESTINATION ${TZ_SYS_RO_SHARE}/syspopup)
 
 add_subdirectory(syspopup)
 add_subdirectory(syspopup-caller)
