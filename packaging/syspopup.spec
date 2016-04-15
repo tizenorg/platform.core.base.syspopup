@@ -36,6 +36,12 @@ BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
 
+%if "%{?profile}" == "wearable"
+%define profile_wearable 1
+%else
+%define profile_wearable 0
+%endif
+
 %description
 syspopup package for popup
 
@@ -71,17 +77,23 @@ sed -i %{SOURCE1001} -e "s|TZ_SYS_DB|%TZ_SYS_DB|g"
 cp %{SOURCE1001} %{SOURCE1002} %{SOURCE1003} %{SOURCE1004} .
 
 %build
-%cmake . \
+%if %{?profile_wearable}
+PROFILE_WEARABLE=ON
+%endif
+
+%cmake \
 %if %{with wayland}
--Dwith_wayland=TRUE \
+	-Dwith_wayland=TRUE \
 %else
 %if %{with x}
--Dwith_x11=TRUE \
+	-Dwith_x11=TRUE \
 %endif
 %endif
--DTZ_SYS_RO_PACKAGES=%{TZ_SYS_RO_PACKAGES} \
--DTZ_SYS_RO_SHARE=%{TZ_SYS_RO_SHARE} \
--DEXTRA_CFLAGS=-fPIC
+	-DTZ_SYS_RO_PACKAGES=%{TZ_SYS_RO_PACKAGES} \
+	-DTZ_SYS_RO_SHARE=%{TZ_SYS_RO_SHARE} \
+	-DEXTRA_CFLAGS=-fPIC \
+	-DPROFILE_WEARABLE:BOOL=${PROFILE_WEARABLE} \
+	.
 
 make %{?jobs:-j%jobs}
 
