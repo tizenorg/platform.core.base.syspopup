@@ -22,7 +22,7 @@ INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"bt-syspopup",		0,0,-1,0,0,"o
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"wifi-qs",			0,0,-1,0,2,"net.wifi-qs");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"poweroff-syspopup",		2,0,-1,0,0,"org.tizen.poweroff-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"lowmem-syspopup",		0,0,5,0,0,"org.tizen.lowmem-syspopup");
-INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"lowbat-syspopup",		1,0,5,0,0,"org.tizen.lowbat-syspopup");
+INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"battery-syspopup",		1,0,5,0,0,"org.tizen.battery-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"net-popup",			0,0,-1,0,0,"net.netpopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"usb-syspopup",		1,0,-1,2,2,"org.tizen.usb-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"usbotg-syspopup",		0,1,-1,0,0,"org.tizen.usbotg-syspopup");
@@ -32,7 +32,7 @@ INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"telephony-syspopup",	1,1,5,0
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"system-syspopup",		2,0,-1,0,0,"org.tizen.system-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"safetyvolume-syspopup",	1,0,-1,0,0,"org.tizen.safetyvolume-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"datausage-syspopup",	1,0,-1,0,0,"org.tizen.datausage-syspopup");
-INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"crash-popup",		1,0,-1,0,0,"org.tizen.crash-popup");
+INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"crash-syspopup",		1,0,-1,0,0,"org.tizen.crash-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"gps-syspopup",		0,0,-1,0,0,"org.tizen.gps-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"mode-syspopup",		1,0,-1,0,0,"org.tizen.mode-syspopup");
 
