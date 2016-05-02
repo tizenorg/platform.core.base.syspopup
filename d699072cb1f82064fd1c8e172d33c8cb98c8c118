@@ -23,6 +23,14 @@ Project: platform/core/base/syspopup
 Branch: refs/heads/tizen
 
 Verified+1: HwanKyu Jhun <h.jhun@samsung.com>
+Code-Review+1: Semun Lee <sm79.lee@samsung.com>
+Submitted-by: HwanKyu Jhun <h.jhun@samsung.com>
+Submitted-at: Fri, 29 Apr 2016 03:23:38 -0700
+Reviewed-on: https://review.tizen.org/gerrit/67952
+Project: platform/core/base/syspopup
+Branch: refs/heads/tizen
+
+Verified+1: HwanKyu Jhun <h.jhun@samsung.com>
 Code-Review+2: Semun Lee <sm79.lee@samsung.com>
 Submitted-by: HwanKyu Jhun <h.jhun@samsung.com>
 Submitted-at: Fri, 29 Apr 2016 03:23:38 -0700
