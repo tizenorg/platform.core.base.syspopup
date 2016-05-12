@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS syspopup_info (
 );
 
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"volume",                    1,1,-1,1,1,"org.tizen.windicator");
-INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"poweroff-syspopup",         2,0,-1,0,0,"org.tizen.poweroff-syspopup");
+INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"powerkey-syspopup",         2,0,-1,0,0,"org.tizen.powerkey-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"lowmem-syspopup",           0,0,5,0,0,"org.tizen.lowmem-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"battery-syspopup",           1,0,5,0,0,"org.tizen.battery-syspopup");
 INSERT OR REPLACE INTO "syspopup_info" VALUES(NULL,"system-syspopup",           2,0,-1,0,0,"org.tizen.system-syspopup");
