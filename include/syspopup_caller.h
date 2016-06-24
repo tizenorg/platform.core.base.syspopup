@@ -24,6 +24,7 @@
 #ifndef __SYSPOPUP_CALLER_H__
 #define __SYSPOPUP_CALLER_H__
 
+#include <unistd.h>
 #include <bundle.h>
 
 #ifdef __cplusplus
@@ -56,6 +57,43 @@ extern "C" {
  *              This API find system popup application package name with given popup name from system popup infomation DB.\n
  *              And then, launch found application package
  *
+ * @privilege   %http://tizen.org/privilege/appmanager.launch
+ * @param[in]   popup_name      system popup application name to launch (not package name)
+ * @param[in]   b               extra bundle(arguement) to toss the popup application
+ * @param[in]   uid             User ID
+ * @return      0 if success, negative value(<0) if fail
+ * @retval      0               - success
+ * @retval      -1              - generic error
+ *
+ * @sample code
+ * @code
+ *
+ * ...
+ *	bundle *b = NULL;
+ *
+ *	b = bundle_create();
+ *	bundle_add(b, "_SYSPOPUP_TITLE_", "System Popup Title");
+ *	bundle_add(b, "_SYSPOPUP_CONTENT_", "System Popup Content");
+ *
+ *	ret = syspopup_launch_for_uid("syspopup-app", b, 5001);
+ *
+ *	bundle_free(b);
+ * ...
+ *
+ * @endcode
+ * @remark
+ *      This API is only available to System users.
+ */
+int syspopup_launch_for_uid(char *popup_name, bundle *b, uid_t uid);
+
+/**
+ * @brief       This API launch the system popup application with given popup name.
+ *
+ *              This API launch the system popup application.
+ *              This API find system popup application package name with given popup name from system popup infomation DB.\n
+ *              And then, launch found application package
+ *
+ * @privilege   %http://tizen.org/privilege/appmanager.launch
  * @param[in]   popup_name      system popup application name to launch (not package name)
  * @param[in]   b               extra bundle(arguement) to toss the popup application
  * @return      0 if success, negative value(<0) if fail

@@ -20,75 +20,33 @@
  *
  */
 
-
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <glib.h>
 #include <gio/gio.h>
 #include <bundle.h>
+#include <systemd/sd-login.h>
+#include <aul.h>
 
 #include "syspopup_core.h"
 #include "syspopup_db.h"
 #include "syspopup_api.h"
 #include "simple_util.h"
 
-static int syspopup_send_launch_request(const char *appid, bundle *b)
+#define REGULAR_UID_MIN 5000
+
+API int syspopup_launch_for_uid(char *popup_name, bundle *b, uid_t uid)
 {
-	GDBusConnection *conn = NULL;
-	GError *err = NULL;
-	bundle_raw *b_raw = NULL;
-	int ret = 0;
-	int len;
-
-#if !(GLIB_CHECK_VERSION(2, 36, 0))
-	g_type_init();
-#endif
-
-	conn = g_bus_get_sync(G_BUS_TYPE_SYSTEM, NULL, &err);
-	if (err) {
-		_E("gdbus connection error: %s", err->message);
-		g_error_free(err);
-		return -1;
-	}
-
-	if (bundle_encode(b, &b_raw, &len) != BUNDLE_ERROR_NONE) {
-		_E("bundle encode error");
-		ret = -1;
-		goto end;
-	}
-
-	if (g_dbus_connection_emit_signal(conn,
-					NULL,
-					AUL_SP_DBUS_PATH,
-					AUL_SP_DBUS_SIGNAL_INTERFACE,
-					AUL_SP_DBUS_LAUNCH_REQUEST_SIGNAL,
-					g_variant_new("(ss)", appid, (char *)b_raw),
-					&err) == FALSE) {
-		_E("emitting the signal error: %s", err->message);
-		ret = -1;
-		goto end;
-	}
-
-	if (g_dbus_connection_flush_sync(conn, NULL, &err) == FALSE) {
-		_E("gdbus connection flush sync failed: %s", err->message);
-		ret = -1;
-	}
-
-end:
-	if (err)
-		g_error_free(err);
-	if (conn)
-		g_object_unref(conn);
-
-	return ret;
-}
-
-API int syspopup_launch(char *popup_name, bundle *b)
-{
-	syspopup_info_t *info = NULL;
-	int ret;
+	syspopup_info_t *info;
+	int ret = -1;
 	int is_bundle = 0;
+	int uid_max;
+	int i;
+	char *state = NULL;
+	uid_t *uids = NULL;
+	uid_t cuid = getuid();
 
 	if (popup_name == NULL) {
 		_E("popup_name is NULL");
@@ -117,16 +75,59 @@ API int syspopup_launch(char *popup_name, bundle *b)
 		return -1;
 	}
 
-	ret = syspopup_send_launch_request(info->pkgname, b);
-	if (ret < 0)
-		_E("syspopup launch error: %d", ret);
+	if (cuid >= REGULAR_UID_MIN) {
+		if (cuid != uid) {
+			_E("Cannot launch syspopup %s in other users",
+					popup_name);
+			ret = -1;
+			goto end;
+		}
 
-	if (is_bundle == 1)
+		ret = aul_launch_app_for_uid(info->pkgname, b, uid);
+		if (ret < 0)
+			_E("syspopup launch error - %d", ret);
+	} else {
+		if (uid >= REGULAR_UID_MIN) {
+			ret = aul_launch_app_for_uid(info->pkgname, b, uid);
+			if (ret < 0)
+				_E("syspopup launch error - %d", ret);
+		} else {
+			uid_max = sd_get_uids(&uids);
+			if (uid_max <= 0) {
+				_E("Failed to get uid list");
+				ret = -1;
+				goto end;
+			}
+
+			for (i = 0; i < uid_max; i++) {
+				if (sd_uid_get_state(uids[i], &state) < 0)
+					continue;
+
+				if (state && !strcmp(state, "online")) {
+					ret = aul_launch_app_for_uid(
+							info->pkgname,
+							b, uids[i]);
+					if (ret < 0) {
+						_E("syspopup launch error - %d",
+								ret);
+					}
+				}
+			}
+		}
+	}
+
+end:
+	if (is_bundle)
 		bundle_free(b);
 
 	_syspopup_info_free(info);
 
-	return ret;
+	return ret > 0 ? 0 : -1;
+}
+
+API int syspopup_launch(char *popup_name, bundle *b)
+{
+	return syspopup_launch_for_uid(popup_name, b, getuid());
 }
 
 API int syspopup_destroy_all(void)

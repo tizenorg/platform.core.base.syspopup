@@ -35,6 +35,8 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
+BuildRequires:  pkgconfig(libsystemd-daemon)
+BuildRequires:  pkgconfig(aul)
 
 %if "%{?profile}" == "wearable"
 %define profile_wearable 1

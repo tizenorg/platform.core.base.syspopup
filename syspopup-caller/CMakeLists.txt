@@ -22,7 +22,7 @@ INCLUDE(FindPkgConfig)
 
 SET(pc_requires "bundle")
 
-pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 libtzplatform-config)
+pkg_check_modules(spcpkgs REQUIRED dlog bundle sqlite3 glib-2.0 gio-2.0 libtzplatform-config libsystemd-daemon aul)
 
 FOREACH(flag ${spcpkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
