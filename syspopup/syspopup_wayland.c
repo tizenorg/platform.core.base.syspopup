@@ -122,6 +122,7 @@ int wl_syspopup_reset(bundle *b)
 	syspopup *sp;
 	Ecore_Wl_Window *wl_win;
 	efl_util_notification_level_e level;
+	int ret;
 
 	popup_name = _syspopup_get_name_from_bundle(b);
 	if (popup_name == NULL)
@@ -145,7 +146,12 @@ int wl_syspopup_reset(bundle *b)
 	ecore_wl_window_type_set(wl_win, ECORE_WL_WINDOW_TYPE_NOTIFICATION);
 
 	level = __wl_syspopup_get_notification_level(info->prio);
-	efl_util_set_notification_window_level(sp->win, level);
+	ret = efl_util_set_notification_window_level(sp->win, level);
+	if (ret != EFL_UTIL_ERROR_NONE) {
+		_E("Failed to set notification window level - %d", ret);
+		return -1;
+	}
+
 	if (info->focus)
 		ecore_wl_window_focus_skip_set(wl_win, EINA_TRUE);
 

@@ -83,6 +83,7 @@ typedef struct _syspopup_handler syspopup_handler;
  *		and set system popup properties based on system popup information DB.\n
  *		system popup properties to be set : timeout, default action type, ....
  *
+ * @privilege   %http://tizen.org/privilege/window.priority.set
  * @param[in]   b		bundle received by app_reset handler (included system popup name)
  * @param[in]   handler         user-supplied handler for handling system popup internal event.
  * @param[in]	parent		parent window created with elm_win_add.
