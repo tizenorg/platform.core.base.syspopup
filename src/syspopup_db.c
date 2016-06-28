@@ -38,7 +38,7 @@
 #define SP_INFO_TBL "syspopup_info"
 #define SP_INFO_TBL_F_NAME "name"
 
-static sqlite3 *db = NULL;
+static sqlite3 *db;
 
 /* db initialize */
 static int __init(void)
@@ -50,7 +50,7 @@ static int __init(void)
 		return 0;
 	}
 
-	rc = sqlite3_open(SYSPOPUP_DB_PATH, &db);
+	rc = sqlite3_open_v2(SYSPOPUP_DB_PATH, &db, SQLITE_OPEN_READONLY, NULL);
 	if (rc != SQLITE_OK) {
 		_E("Can't open database: %s / %d / %d", sqlite3_errmsg(db),
 				rc, sqlite3_extended_errcode(db));
@@ -65,7 +65,7 @@ static int __init(void)
 static int __fini(void)
 {
 	if (db) {
-		sqlite3_close(db);
+		sqlite3_close_v2(db);
 		db = NULL;
 	}
 
