@@ -4,7 +4,6 @@
 
 <busconfig>
 	<policy context="default">
-		<allow send_destination="*" send_interface="org.tizen.aul.syspopup" send_member="syspopup_launch_request" send_type="signal"/>
 		<check send_destination="*" send_interface="org.tizen.aul.syspopup" send_member="syspopup_launch_request" send_type="signal" privilege="http://tizen.org/privilege/appmanager.launch"/>
 	</policy>
 </busconfig>
